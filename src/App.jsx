@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { LEVELS, COLS, ROWS } from "./levels";
 import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
