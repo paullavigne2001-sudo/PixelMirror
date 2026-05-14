@@ -22,6 +22,10 @@ export default function App() {
   const completedCount = useRef(0);
 
   const level = LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
+  useEffect(() => {
+  setUserGrid(Array(COLS * ROWS).fill(null));
+  setSelectedColor(level.palette[0]);
+}, [levelIdx]);
   const screenW = useWindowWidth();
 
   const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 20);
