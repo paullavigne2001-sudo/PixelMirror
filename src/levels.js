@@ -184,4 +184,26 @@ export const LEVELS = [
     ];
   })(),
 },
+{
+  id: 21,
+  name: "LION",
+  emoji: "🦁",
+  palette: ["#e67700", "#000000", "#ffcc00"],
+  grid: (() => {
+    const N = null, O = "#e67700", R = "#000000", B = "#ffcc00";
+
+    return [
+      [N,N,N,N,N,N,N,N,N,N],
+      [N,N,N,N,N,N,N,N,N,N],
+      [N,N,O,O,O,N,N,N,N,N],
+      [N,N,B,O,O,O,N,N,N,N],
+      [N,B,R,B,O,O,N,N,N,N],
+      [N,B,B,B,O,O,B,B,B,N],
+      [N,N,O,O,O,B,B,B,B,B],
+      [N,N,N,B,B,B,N,B,B,B],
+      [N,B,B,B,B,N,B,B,B,N],
+      [N,N,N,N,N,N,N,N,N,N]
+    ];
+  })(),
+},
 ];
