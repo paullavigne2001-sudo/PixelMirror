@@ -1,5 +1,10 @@
 import { memo, useState, useEffect, useRef } from "react";
 
+// Vibration courte et douce
+function hapticPaint() {
+  try { navigator.vibrate(12); } catch {}
+}
+
 const GridCell = memo(function GridCell({ color, size, onPaint, onEnter, idx }) {
   const [bouncing, setBouncing] = useState(false);
   const prevColor = useRef(color);
@@ -7,6 +12,7 @@ const GridCell = memo(function GridCell({ color, size, onPaint, onEnter, idx }) 
   useEffect(() => {
     if (color !== prevColor.current) {
       prevColor.current = color;
+      hapticPaint();
       setBouncing(true);
       const t = setTimeout(() => setBouncing(false), 160);
       return () => clearTimeout(t);
