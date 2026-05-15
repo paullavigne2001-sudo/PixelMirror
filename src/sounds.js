@@ -5,7 +5,7 @@ function getAudioCtx() {
   return audioCtx;
 }
 
-function playTone(freq, type = "square", duration = 0.07, vol = 0.12) {
+function playTone(freq, type = "sine", duration = 0.12, vol = 0.06) {
   try {
     const ctx = getAudioCtx();
     const osc = ctx.createOscillator();
@@ -22,12 +22,22 @@ function playTone(freq, type = "square", duration = 0.07, vol = 0.12) {
 }
 
 export const sounds = {
-  paint: () => playTone(440, "square", 0.05, 0.08),
+  // Doux "plop" quand on peint
+  paint: () => playTone(320, "sine", 0.08, 0.04),
+
+  // Mélodie douce ascendante pour DONE
   done: () => {
-    playTone(523, "sine", 0.1);
-    setTimeout(() => playTone(659, "sine", 0.12), 100);
-    setTimeout(() => playTone(784, "sine", 0.18), 220);
+    playTone(440, "sine", 0.15, 0.06);
+    setTimeout(() => playTone(550, "sine", 0.15, 0.06), 150);
+    setTimeout(() => playTone(660, "sine", 0.2, 0.07), 300);
   },
-  star: () => playTone(880, "sine", 0.15, 0.15),
-  next: () => playTone(330, "square", 0.08, 0.1),
+
+  // Petite note cristalline pour les étoiles
+  star: () => {
+    playTone(780, "sine", 0.2, 0.06);
+    setTimeout(() => playTone(980, "sine", 0.25, 0.05), 120);
+  },
+
+  // Clic doux pour les boutons
+  next: () => playTone(280, "sine", 0.1, 0.05),
 };
