@@ -162,4 +162,26 @@ export const LEVELS = [
       return [[N,N,N,N,N,N,N,N,S,N],[N,N,N,N,N,N,N,S,D,N],[N,N,N,N,N,N,S,D,N,N],[N,N,N,N,N,S,D,N,N,N],[N,G,G,N,S,D,N,N,N,N],[G,G,G,G,S,N,N,N,N,N],[N,G,G,B,N,N,N,N,N,N],[N,N,B,B,B,N,N,N,N,N],[N,B,B,N,B,B,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
     })(),
   },
+{
+  id: 21,
+  name: "LION",
+  emoji: "🦁",
+  palette: ["#e67700", "#000000", "#ffcc00"],
+  grid: (() => {
+    const N = null, O = "#e67700", R = "#000000", B = "#ffcc00";
+
+    return [
+      [N,N,N,N,N,N,N,N,N,N],
+      [N,N,N,N,N,N,N,N,N,N],
+      [N,N,O,O,O,N,N,N,N,N],
+      [N,N,B,O,O,O,N,N,N,N],
+      [N,B,R,B,O,O,N,N,N,N],
+      [N,B,B,B,O,O,B,B,B,N],
+      [N,N,O,O,O,B,B,B,B,B],
+      [N,N,N,B,B,B,N,B,B,B],
+      [N,B,B,B,B,N,B,B,B,N],
+      [N,N,N,N,N,N,N,N,N,N]
+    ];
+  })(),
+},
 ];
