@@ -8,6 +8,23 @@ import ResultOverlay from "./components/ResultOverlay";
 import CompareAnimation from "./components/CompareAnimation";
 import CatalogueScreen from "./components/CatalogueScreen";
 
+// ─────────────────────────────────────────────
+// HAPTIQUE
+// ─────────────────────────────────────────────
+function hapticDone() {
+  try { navigator.vibrate([40, 30, 40]); } catch {}
+}
+function hapticStars(count) {
+  try {
+    if (count === 3) navigator.vibrate([30, 20, 30, 20, 30]);
+    else if (count === 2) navigator.vibrate([30, 20, 30]);
+    else navigator.vibrate(60);
+  } catch {}
+}
+function hapticButton() {
+  try { navigator.vibrate(18); } catch {}
+}
+
 export default function App() {
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
   const [userGrid, setUserGrid] = useState(() => Array(COLS * ROWS).fill(null));
@@ -22,14 +39,16 @@ export default function App() {
   const completedCount = useRef(0);
 
   const level = LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
-  useEffect(() => {
-  setUserGrid(Array(COLS * ROWS).fill(null));
-  setSelectedColor(level.palette[0]);
-}, [levelIdx]);
   const screenW = useWindowWidth();
 
   const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 20);
   const modelCell = Math.max(Math.floor(drawCell * 0.42), 8);
+
+  // Reset grille à chaque nouveau niveau
+  useEffect(() => {
+    setUserGrid(Array(COLS * ROWS).fill(null));
+    setSelectedColor(level.palette[0]);
+  }, [levelIdx]);
 
   const paint = useCallback((idx) => {
     if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= COLS * ROWS) return;
@@ -60,6 +79,7 @@ export default function App() {
 
   const handleDone = useCallback(() => {
     sounds.done();
+    hapticDone();
     setShowCompare(true);
   }, []);
 
@@ -70,6 +90,7 @@ export default function App() {
     if (errCount > 0) stars = errCount > nonEmpty * 0.15 ? 1 : 2;
     setLastStars(stars);
     setCatalogue(prev => ({ ...prev, [level.id]: Math.max(prev[level.id] ?? -1, stars) }));
+    hapticStars(stars);
     setShowResult(true);
     completedCount.current += 1;
   }, [level]);
@@ -79,12 +100,14 @@ export default function App() {
   }, []);
 
   const handleNext = useCallback(() => {
+    hapticButton();
     setShowResult(false);
     if (completedCount.current % 3 === 0) setShowAd(true);
     else goNext();
   }, [goNext]);
 
   const handleRetry = useCallback(() => {
+    hapticButton();
     setShowResult(false);
     setUserGrid(Array(COLS * ROWS).fill(null));
   }, []);
@@ -119,7 +142,7 @@ export default function App() {
         <div style={{ fontSize: 11, fontWeight: "bold", textAlign: "center" }}>
           Level {level.id} — {level.name}
         </div>
-        <button onClick={() => setUserGrid(Array(COLS * ROWS).fill(null))} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9" }}>🔄</button>
+        <button onClick={() => { hapticButton(); setUserGrid(Array(COLS * ROWS).fill(null)); }} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9" }}>🔄</button>
       </div>
 
       {/* MODEL — small, on top */}
