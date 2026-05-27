@@ -18,12 +18,15 @@ export const LEVELS = [
       return [[N,R,R,N,N,N,N,R,R,N],[R,R,R,R,N,N,R,R,R,R],[R,R,P,R,R,R,R,P,R,R],[R,R,R,R,R,R,R,R,R,R],[R,R,R,R,R,R,R,R,R,R],[N,R,R,R,R,R,R,R,R,N],[N,N,R,R,R,R,R,R,N,N],[N,N,N,R,R,R,R,N,N,N],[N,N,N,N,R,R,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
     })(),
   },
-  {
-    id: 3, name: "Étoile", emoji: "⭐",
-    palette: ["#FFD700", "#FFA500"],
-    grid: (() => {
-      const N = null, Y = "#FFD700", O = "#FFA500";
-      return [
+{
+  id: 3,
+  name: "Etoile",
+  emoji: "⭐",
+  palette: ["#F5A623", "#ff7800"],
+  grid: (() => {
+    const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff7800";
+
+    return [
       [N,N,N,N,R,R,N,N,N,N],
       [N,N,N,R,R,R,R,N,N,N],
       [R,R,B,R,R,R,B,R,R,R],
@@ -35,8 +38,8 @@ export const LEVELS = [
       [R,R,R,N,N,N,N,B,R,R],
       [R,R,N,N,N,N,N,N,R,R]
     ];
-    })(),
-  },
+  })(),
+},
   {
     id: 4, name: "Maison", emoji: "🏠",
     palette: ["#D0021B", "#8B4513", "#F5A623", "#4A90D9", "#417505"],
