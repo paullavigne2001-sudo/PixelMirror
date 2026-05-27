@@ -156,10 +156,22 @@ export const LEVELS = [
   },
   {
     id: 20, name: "Épée", emoji: "⚔️",
-    palette: ["#C0C0C0", "#8B6914", "#FFD700", "#808080"],
-    grid: (() => {
-      const N = null, S = "#C0C0C0", B = "#8B6914", G = "#FFD700", D = "#808080";
-      return [[N,N,N,N,N,N,N,N,S,N],[N,N,N,N,N,N,N,S,D,N],[N,N,N,N,N,N,S,D,N,N],[N,N,N,N,N,S,D,N,N,N],[N,G,G,N,S,D,N,N,N,N],[G,G,G,G,S,N,N,N,N,N],[N,G,G,B,N,N,N,N,N,N],[N,N,B,B,B,N,N,N,N,N],[N,B,B,N,B,B,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
+  palette: ["#F5A623", "#ff0000", "#96480e", "#ffffff"],
+  grid: (() => {
+    const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff0000", G = "#96480e", W = "#ffffff";
+
+    return [
+      [N,N,N,N,N,N,N,O,O,O],
+      [N,N,N,N,N,N,O,W,W,O],
+      [N,N,N,N,N,O,W,W,W,O],
+      [N,O,N,N,O,W,W,W,O,N],
+      [O,R,O,O,W,W,W,O,N,N],
+      [O,R,R,O,W,W,O,N,N,N],
+      [N,O,R,B,O,O,N,N,N,N],
+      [O,G,O,R,R,O,N,N,N,N],
+      [O,G,G,O,R,R,O,N,N,N],
+      [N,O,O,N,O,O,N,N,N,N]
+    ];
     })(),
   },
 {
@@ -184,26 +196,5 @@ export const LEVELS = [
     ];
   })(),
 },
-{
-  id: 21,
-  name: "LION",
-  emoji: "🦁",
-  palette: ["#e67700", "#000000", "#ffcc00"],
-  grid: (() => {
-    const N = null, O = "#e67700", R = "#000000", B = "#ffcc00";
 
-    return [
-      [N,N,N,N,N,N,N,N,N,N],
-      [N,N,N,N,N,N,N,N,N,N],
-      [N,N,O,O,O,N,N,N,N,N],
-      [N,N,B,O,O,O,N,N,N,N],
-      [N,B,R,B,O,O,N,N,N,N],
-      [N,B,B,B,O,O,B,B,B,N],
-      [N,N,O,O,O,B,B,B,B,B],
-      [N,N,N,B,B,B,N,B,B,B],
-      [N,B,B,B,B,N,B,B,B,N],
-      [N,N,N,N,N,N,N,N,N,N]
-    ];
-  })(),
-},
 ];
