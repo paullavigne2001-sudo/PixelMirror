@@ -161,16 +161,16 @@ export const LEVELS = [
     const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff0000", G = "#96480e", W = "#ffffff";
 
     return [
-      [N,N,N,N,N,N,N,O,O,O],
-      [N,N,N,N,N,N,O,W,W,O],
-      [N,N,N,N,N,O,W,W,W,O],
-      [N,O,N,N,O,W,W,W,O,N],
-      [O,R,O,O,W,W,W,O,N,N],
-      [O,R,R,O,W,W,O,N,N,N],
-      [N,O,R,B,O,O,N,N,N,N],
-      [O,G,O,R,R,O,N,N,N,N],
-      [O,G,G,O,R,R,O,N,N,N],
-      [N,O,O,N,O,O,N,N,N,N]
+      [N,N,N,N,N,N,N,N,W,W],
+      [N,N,N,N,N,N,N,W,W,W],
+      [N,N,N,N,N,N,W,W,W,N],
+      [N,R,N,N,N,W,W,W,N,N],
+      [R,R,N,N,W,W,W,N,N,N],
+      [R,R,R,W,W,W,N,N,N,N],
+      [N,R,R,B,W,N,N,N,N,N],
+      [N,G,G,R,R,N,N,N,N,N],
+      [G,G,G,R,R,R,R,N,N,N],
+      [G,G,N,N,R,R,N,N,N,N]
     ];
     })(),
   },
