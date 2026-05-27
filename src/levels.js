@@ -27,15 +27,15 @@ export const LEVELS = [
     const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff7800";
 
     return [
-      [N,N,N,N,R,R,N,N,N,N],
-      [N,N,N,R,R,R,R,N,N,N],
-      [R,R,B,R,R,R,B,R,R,R],
+      [N,N,N,N,B,R,N,N,N,N],
+      [N,N,N,R,R,R,B,N,N,N],
+      [R,R,B,R,R,B,R,R,B,R],
       [R,R,R,R,R,R,R,R,R,R],
-      [N,R,R,R,R,R,R,R,B,N],
-      [N,N,B,R,R,R,R,R,N,N],
-      [N,R,R,R,R,R,R,R,R,N],
+      [N,B,R,R,R,R,R,R,B,N],
+      [N,N,B,R,B,R,R,R,N,N],
+      [N,R,R,R,R,R,B,R,N,N],
       [N,R,R,R,N,N,R,R,R,N],
-      [R,R,R,N,N,N,N,B,R,R],
+      [R,B,R,N,N,N,N,R,B,R],
       [R,R,N,N,N,N,N,N,R,R]
     ];
   })(),
