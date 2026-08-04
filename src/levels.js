@@ -11,13 +11,24 @@ export const LEVELS = [
     })(),
   },
   {
-    id: 2, name: "Cœur", emoji: "❤️",
-    palette: ["#F5A623", "#ff7800", "#ffffff"],
+  id: 2, name: "Cœur", emoji: "❤️",
+  palette: ["#E8001D", "#FF6B8A"],
   grid: (() => {
-    const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff7800", G = "#ffffff";
-      return [[N,R,R,N,N,N,N,R,R,N],[R,R,R,R,N,N,R,R,R,R],[R,R,P,R,R,R,R,P,R,R],[R,R,R,R,R,R,R,R,R,R],[R,R,R,R,R,R,R,R,R,R],[N,R,R,R,R,R,R,R,R,N],[N,N,R,R,R,R,R,R,N,N],[N,N,N,R,R,R,R,N,N,N],[N,N,N,N,R,R,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
-    })(),
-  },
+    const N = null, R = "#E8001D", P = "#FF6B8A";
+    return [
+      [N,R,R,N,N,N,N,R,R,N],
+      [R,R,R,R,N,N,R,R,R,R],
+      [R,R,P,R,R,R,R,P,R,R],
+      [R,R,R,R,R,R,R,R,R,R],
+      [R,R,R,R,R,R,R,R,R,R],
+      [N,R,R,R,R,R,R,R,R,N],
+      [N,N,R,R,R,R,R,R,N,N],
+      [N,N,N,R,R,R,R,N,N,N],
+      [N,N,N,N,R,R,N,N,N,N],
+      [N,N,N,N,N,N,N,N,N,N],
+    ];
+  })(),
+},
 {
   id: 3,
   name: "Etoile",
