@@ -33,7 +33,7 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
                   opacity: done ? 1 : 0.5,
                   boxShadow: done ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
                 }}>
-                  <div style={{ fontSize: 26, marginBottom: 5 }}>{done ? lvl.emoji : "🔒"}</div>
+                  <div style={{ fontSize: 26, marginBottom: 5 }}>{done ? "" : "🔒"}</div>
                   <div style={{ fontSize: 6, color: "#555", marginBottom: 6 }}>
                     {done ? lvl.name : `LVL ${lvl.id}`}
                   </div>
