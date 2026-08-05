@@ -33,7 +33,28 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
                   opacity: done ? 1 : 0.5,
                   boxShadow: done ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
                 }}>
-                  <div style={{ fontSize: 26, marginBottom: 5 }}>{done ? "" : "🔒"}</div>
+                  {done ? (
+  <div style={{
+    display: "grid",
+    gridTemplateColumns: `repeat(${lvl.grid[0].length}, 4px)`,
+    gap: 0.5,
+    marginBottom: 5,
+    background: "#ccc",
+    padding: 2,
+    borderRadius: 3,
+    width: "fit-content",
+    margin: "0 auto 5px",
+  }}>
+    {lvl.grid.flat().map((c, i) => (
+      <div key={i} style={{
+        width: 4, height: 4,
+        background: c || "rgba(255,255,255,0.5)",
+      }} />
+    ))}
+  </div>
+) : (
+  <div style={{ fontSize: 26, marginBottom: 5 }}>🔒</div>
+)}
                   <div style={{ fontSize: 6, color: "#555", marginBottom: 6 }}>
                     {done ? lvl.name : `LVL ${lvl.id}`}
                   </div>
