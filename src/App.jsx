@@ -25,7 +25,64 @@ function hapticButton() {
   try { navigator.vibrate(18); } catch {}
 }
 
-export default function App() {
+// ─────────────────────────────────────────────
+// ÉCRAN D'ACCUEIL
+// ─────────────────────────────────────────────
+function HomeScreen({ onPlay }) {
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      fontFamily: "'Press Start 2P', monospace",
+      gap: 40,
+    }}>
+      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+      {/* Logo pixel art décoratif */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+        <div style={{ fontSize: 11, color: "#1a4a7a", letterSpacing: 3, textAlign: "center" }}>
+          🪞 PIXEL
+        </div>
+        <div style={{ fontSize: 18, color: "#357ABD", letterSpacing: 4, textAlign: "center" }}>
+          MIRROR
+        </div>
+        <div style={{
+          width: 60, height: 3,
+          background: "linear-gradient(90deg, #4A90D9, #87CEEB)",
+          borderRadius: 2,
+        }} />
+        <div style={{ fontSize: 7, color: "#7a9abb", letterSpacing: 2, marginTop: 4 }}>
+          REPRODUIS LE PIXEL ART
+        </div>
+      </div>
+
+      {/* Bouton jouer */}
+      <button
+        onClick={() => { hapticButton(); onPlay(); }}
+        style={{
+          background: "linear-gradient(135deg, #4A90D9, #357ABD)",
+          color: "#fff", border: "none", borderRadius: 14,
+          padding: "16px 48px", fontSize: 12,
+          fontFamily: "'Press Start 2P', monospace",
+          cursor: "pointer",
+          boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
+          letterSpacing: 2,
+        }}
+      >
+        ▶ JOUER
+      </button>
+
+      <div style={{ fontSize: 6, color: "#aaa" }}>© MoviSoft Co.,Ltd. — Fan Recreation</div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// ÉCRAN DE JEU
+// ─────────────────────────────────────────────
+function GameScreen({ onHome }) {
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
   const [userGrid, setUserGrid] = useState(() => Array(COLS * ROWS).fill(null));
   const [selectedColor, setSelectedColor] = useState(null);
@@ -131,18 +188,30 @@ export default function App() {
       onMouseUp={() => { isDrawing.current = false; }}
       onTouchEnd={() => { isDrawing.current = false; }}
     >
-      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-
       {/* HEADER */}
       <div style={{
         width: "100%", maxWidth: 540, display: "flex", alignItems: "center",
         justifyContent: "space-between", padding: "12px 16px", boxSizing: "border-box",
       }}>
-        <button onClick={() => setShowCatalogue(true)} style={{ background: "none", border: "none", fontSize: 26, cursor: "pointer" }}>📖</button>
-        <div style={{ fontSize: 11, fontWeight: "bold", textAlign: "center" }}>
+        {/* Gauche : accueil + catalogue */}
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => { hapticButton(); onHome(); }} style={{
+            background: "none", border: "none", fontSize: 22, cursor: "pointer"
+          }}>🏠</button>
+          <button onClick={() => setShowCatalogue(true)} style={{
+            background: "none", border: "none", fontSize: 22, cursor: "pointer"
+          }}>📖</button>
+        </div>
+
+        {/* Centre : niveau */}
+        <div style={{ fontSize: 10, fontWeight: "bold", textAlign: "center" }}>
           Level {level.id} — {level.name}
         </div>
-        <button onClick={() => { hapticButton(); setUserGrid(Array(COLS * ROWS).fill(null)); }} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9" }}>🔄</button>
+
+        {/* Droite : reset */}
+        <button onClick={() => { hapticButton(); setUserGrid(Array(COLS * ROWS).fill(null)); }} style={{
+          background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9"
+        }}>🔄</button>
       </div>
 
       {/* MODEL — small, on top */}
@@ -239,5 +308,22 @@ export default function App() {
         />
       )}
     </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// APP PRINCIPALE
+// ─────────────────────────────────────────────
+export default function App() {
+  const [screen, setScreen] = useState("home");
+
+  return (
+    <>
+      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+      {screen === "home"
+        ? <HomeScreen onPlay={() => setScreen("game")} />
+        : <GameScreen onHome={() => setScreen("home")} />
+      }
+    </>
   );
 }
