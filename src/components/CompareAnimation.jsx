@@ -1,13 +1,15 @@
 import { memo, useState, useEffect, useMemo } from "react";
-import { COLS, ROWS } from "../levels";
 
-const CompareAnimation = memo(function CompareAnimation({ target, userGrid, onDone }) {
+const CompareAnimation = memo(function CompareAnimation({ target, userGrid, cols, rows, onDone }) {
+  const COLS = cols ?? 10;
+  const ROWS = rows ?? 10;
+  const total = COLS * ROWS;
+
   const [revealedCount, setRevealedCount] = useState(0);
   const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     let i = 0;
-    const total = COLS * ROWS;
     const interval = setInterval(() => {
       if (i >= total) {
         clearInterval(interval);
@@ -29,16 +31,14 @@ const CompareAnimation = memo(function CompareAnimation({ target, userGrid, onDo
 
   const flatTarget = useMemo(() => target.flat(), [target]);
 
-  // Calcule la taille max des cellules pour que les 2 grilles
-  // tiennent côte à côte dans l'écran :
-  // screenW = 2 * (cs * COLS + (COLS-1)*1 + 3*2) + gap(12) + padding(32)
+  // Taille des cellules : les 2 grilles doivent tenir côte à côte
   const screenW = Math.min(
     typeof window !== "undefined" ? window.innerWidth : 360,
     500
   );
   const cs = Math.max(
     Math.floor((screenW - 32 - 12 - 2 * (COLS - 1 + 6)) / (2 * COLS)),
-    8
+    5
   );
 
   const gridStyle = {
@@ -62,7 +62,6 @@ const CompareAnimation = memo(function CompareAnimation({ target, userGrid, onDo
       </div>
 
       <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-
         {/* MODÈLE */}
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 7, color: "#aaa", marginBottom: 5 }}>MODÈLE</div>
@@ -93,7 +92,6 @@ const CompareAnimation = memo(function CompareAnimation({ target, userGrid, onDo
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
