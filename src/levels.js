@@ -1,9 +1,11 @@
+// Constantes par défaut (10x10)
 export const COLS = 10;
 export const ROWS = 10;
 
 export const LEVELS = [
   {
     id: 1, name: "Burger", emoji: "🍔",
+    cols: 10, rows: 10,
     palette: ["#F5A623", "#D0021B", "#4A2C0A", "#417505", "#F8E08E"],
     grid: (() => {
       const N = null, O = "#F5A623", R = "#D0021B", B = "#4A2C0A", G = "#417505", W = "#F8E08E";
@@ -11,48 +13,26 @@ export const LEVELS = [
     })(),
   },
   {
-  id: 2, name: "Cœur", emoji: "❤️",
-  palette: ["#E8001D", "#FF6B8A"],
-  grid: (() => {
-    const N = null, R = "#E8001D", P = "#FF6B8A";
-    return [
-      [N,R,R,N,N,N,N,R,R,N],
-      [R,R,R,R,N,N,R,R,R,R],
-      [R,R,P,R,R,R,R,P,R,R],
-      [R,R,R,R,R,R,R,R,R,R],
-      [R,R,R,R,R,R,R,R,R,R],
-      [N,R,R,R,R,R,R,R,R,N],
-      [N,N,R,R,R,R,R,R,N,N],
-      [N,N,N,R,R,R,R,N,N,N],
-      [N,N,N,N,R,R,N,N,N,N],
-      [N,N,N,N,N,N,N,N,N,N],
-    ];
-  })(),
-},
-{
-  id: 3,
-  name: "Etoile",
-  emoji: "⭐",
-  palette: ["#F5A623", "#ff7800"],
-  grid: (() => {
-    const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff7800";
-
-    return [
-      [N,N,N,N,B,R,N,N,N,N],
-      [N,N,N,R,R,R,B,N,N,N],
-      [R,R,B,R,R,B,R,R,B,R],
-      [R,R,R,R,R,R,R,R,R,R],
-      [N,B,R,R,R,R,R,R,B,N],
-      [N,N,B,R,B,R,R,R,N,N],
-      [N,R,R,R,R,R,B,R,N,N],
-      [N,R,R,R,N,N,R,R,R,N],
-      [R,B,R,N,N,N,N,R,B,R],
-      [R,R,N,N,N,N,N,N,R,R]
-    ];
-  })(),
-},
+    id: 2, name: "Cœur", emoji: "❤️",
+    cols: 10, rows: 10,
+    palette: ["#E8001D", "#FF6B8A"],
+    grid: (() => {
+      const N = null, R = "#E8001D", P = "#FF6B8A";
+      return [[N,R,R,N,N,N,N,R,R,N],[R,R,R,R,N,N,R,R,R,R],[R,R,P,R,R,R,R,P,R,R],[R,R,R,R,R,R,R,R,R,R],[R,R,R,R,R,R,R,R,R,R],[N,R,R,R,R,R,R,R,R,N],[N,N,R,R,R,R,R,R,N,N],[N,N,N,R,R,R,R,N,N,N],[N,N,N,N,R,R,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
+    })(),
+  },
+  {
+    id: 3, name: "Étoile", emoji: "⭐",
+    cols: 10, rows: 10,
+    palette: ["#FFD700", "#FFA500"],
+    grid: (() => {
+      const N = null, Y = "#FFD700", O = "#FFA500";
+      return [[N,N,N,N,Y,Y,N,N,N,N],[N,N,N,Y,Y,Y,Y,N,N,N],[Y,Y,Y,Y,Y,Y,Y,Y,Y,Y],[N,Y,Y,Y,Y,Y,Y,Y,Y,N],[N,N,O,Y,Y,Y,Y,O,N,N],[N,N,Y,Y,Y,Y,Y,Y,N,N],[N,Y,Y,N,Y,Y,N,Y,Y,N],[Y,Y,N,N,Y,Y,N,N,Y,Y],[Y,N,N,N,N,N,N,N,N,Y],[N,N,N,N,N,N,N,N,N,N]];
+    })(),
+  },
   {
     id: 4, name: "Maison", emoji: "🏠",
+    cols: 10, rows: 10,
     palette: ["#D0021B", "#8B4513", "#F5A623", "#4A90D9", "#417505"],
     grid: (() => {
       const N = null, R = "#D0021B", B = "#8B4513", O = "#F5A623", L = "#4A90D9", G = "#417505";
@@ -61,6 +41,7 @@ export const LEVELS = [
   },
   {
     id: 5, name: "Champignon", emoji: "🍄",
+    cols: 10, rows: 10,
     palette: ["#D0021B", "#FFFFFF", "#8B4513", "#F5DEB3"],
     grid: (() => {
       const N = null, R = "#D0021B", W = "#FFFFFF", B = "#8B4513", T = "#F5DEB3";
@@ -69,6 +50,7 @@ export const LEVELS = [
   },
   {
     id: 6, name: "Crâne", emoji: "💀",
+    cols: 10, rows: 10,
     palette: ["#F5F5DC", "#000000"],
     grid: (() => {
       const N = null, W = "#F5F5DC", B = "#000000";
@@ -77,6 +59,7 @@ export const LEVELS = [
   },
   {
     id: 7, name: "Cactus", emoji: "🌵",
+    cols: 10, rows: 10,
     palette: ["#417505", "#228B22", "#8B4513"],
     grid: (() => {
       const N = null, G = "#417505", D = "#228B22", B = "#8B4513";
@@ -85,6 +68,7 @@ export const LEVELS = [
   },
   {
     id: 8, name: "Couronne", emoji: "👑",
+    cols: 10, rows: 10,
     palette: ["#FFD700", "#FFA500", "#D0021B"],
     grid: (() => {
       const N = null, Y = "#FFD700", O = "#FFA500", R = "#D0021B";
@@ -93,6 +77,7 @@ export const LEVELS = [
   },
   {
     id: 9, name: "Fusée", emoji: "🚀",
+    cols: 10, rows: 10,
     palette: ["#FFFFFF", "#D0021B", "#808080", "#4A90D9", "#FF6B00"],
     grid: (() => {
       const N = null, W = "#FFFFFF", R = "#D0021B", G = "#808080", B = "#4A90D9", O = "#FF6B00";
@@ -101,6 +86,7 @@ export const LEVELS = [
   },
   {
     id: 10, name: "Diamant", emoji: "💎",
+    cols: 10, rows: 10,
     palette: ["#4A90D9", "#87CEEB", "#FFFFFF", "#1A5276"],
     grid: (() => {
       const N = null, B = "#4A90D9", L = "#87CEEB", W = "#FFFFFF", D = "#1A5276";
@@ -109,6 +95,7 @@ export const LEVELS = [
   },
   {
     id: 11, name: "Fleur", emoji: "🌸",
+    cols: 10, rows: 10,
     palette: ["#FF69B4", "#FFD700", "#417505", "#FFFFFF"],
     grid: (() => {
       const N = null, P = "#FF69B4", Y = "#FFD700", G = "#417505", W = "#FFFFFF";
@@ -117,6 +104,7 @@ export const LEVELS = [
   },
   {
     id: 12, name: "Robot", emoji: "🤖",
+    cols: 10, rows: 10,
     palette: ["#808080", "#4A90D9", "#D0021B", "#FFD700", "#000000"],
     grid: (() => {
       const N = null, G = "#808080", B = "#4A90D9", R = "#D0021B", Y = "#FFD700", K = "#000000";
@@ -125,6 +113,7 @@ export const LEVELS = [
   },
   {
     id: 13, name: "Fantôme", emoji: "👻",
+    cols: 10, rows: 10,
     palette: ["#FFFFFF", "#000000", "#87CEEB", "#808080"],
     grid: (() => {
       const N = null, W = "#FFFFFF", B = "#000000", L = "#87CEEB", G = "#808080";
@@ -133,6 +122,7 @@ export const LEVELS = [
   },
   {
     id: 14, name: "Arc-en-ciel", emoji: "🌈",
+    cols: 10, rows: 10,
     palette: ["#E8001D", "#FF6B00", "#FFD700", "#417505", "#4A90D9", "#7B2FBE"],
     grid: (() => {
       const N = null, R = "#E8001D", O = "#FF6B00", Y = "#FFD700", G = "#417505", B = "#4A90D9", V = "#7B2FBE";
@@ -141,6 +131,7 @@ export const LEVELS = [
   },
   {
     id: 15, name: "Soleil", emoji: "☀️",
+    cols: 10, rows: 10,
     palette: ["#FFD700", "#FFA500"],
     grid: (() => {
       const N = null, Y = "#FFD700", O = "#FFA500";
@@ -149,6 +140,7 @@ export const LEVELS = [
   },
   {
     id: 16, name: "Planète", emoji: "🪐",
+    cols: 10, rows: 10,
     palette: ["#4A90D9", "#87CEEB", "#F5A623", "#808080"],
     grid: (() => {
       const N = null, B = "#4A90D9", L = "#87CEEB", O = "#F5A623", G = "#808080";
@@ -157,6 +149,7 @@ export const LEVELS = [
   },
   {
     id: 17, name: "Arbre", emoji: "🌲",
+    cols: 10, rows: 10,
     palette: ["#417505", "#228B22", "#8B4513"],
     grid: (() => {
       const N = null, G = "#417505", D = "#228B22", B = "#8B4513";
@@ -165,6 +158,7 @@ export const LEVELS = [
   },
   {
     id: 18, name: "Poisson", emoji: "🐟",
+    cols: 10, rows: 10,
     palette: ["#4A90D9", "#87CEEB", "#000000"],
     grid: (() => {
       const N = null, B = "#4A90D9", L = "#87CEEB", K = "#000000";
@@ -173,6 +167,7 @@ export const LEVELS = [
   },
   {
     id: 19, name: "Glace", emoji: "🍦",
+    cols: 10, rows: 10,
     palette: ["#FF69B4", "#F5DEB3", "#8B4513", "#FFFFFF"],
     grid: (() => {
       const N = null, P = "#FF69B4", T = "#F5DEB3", B = "#8B4513", W = "#FFFFFF";
@@ -181,45 +176,27 @@ export const LEVELS = [
   },
   {
     id: 20, name: "Épée", emoji: "⚔️",
-  palette: ["#F5A623", "#ff0000", "#96480e", "#ffffff"],
-  grid: (() => {
-    const N = null, O = "#A6A6A6", R = "#F5A623", B = "#ff0000", G = "#96480e", W = "#ffffff";
-
-    return [
-      [N,N,N,N,N,N,N,N,W,W],
-      [N,N,N,N,N,N,N,W,W,W],
-      [N,N,N,N,N,N,W,W,W,N],
-      [N,R,N,N,N,W,W,W,N,N],
-      [R,R,N,N,W,W,W,N,N,N],
-      [R,R,R,W,W,W,N,N,N,N],
-      [N,R,R,B,W,N,N,N,N,N],
-      [N,G,G,R,R,N,N,N,N,N],
-      [G,G,G,R,R,R,R,N,N,N],
-      [G,G,N,N,R,R,N,N,N,N]
-    ];
+    cols: 10, rows: 10,
+    palette: ["#C0C0C0", "#8B6914", "#FFD700", "#808080"],
+    grid: (() => {
+      const N = null, S = "#C0C0C0", B = "#8B6914", G = "#FFD700", D = "#808080";
+      return [[N,N,N,N,N,N,N,N,S,N],[N,N,N,N,N,N,N,S,D,N],[N,N,N,N,N,N,S,D,N,N],[N,N,N,N,N,S,D,N,N,N],[N,G,G,N,S,D,N,N,N,N],[G,G,G,G,S,N,N,N,N,N],[N,G,G,B,N,N,N,N,N,N],[N,N,B,B,B,N,N,N,N,N],[N,B,B,N,B,B,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
     })(),
   },
-{
-  id: 21,
-  name: "LION",
-  emoji: "🦁",
-  palette: ["#e67700", "#000000", "#ffcc00"],
-  grid: (() => {
-    const N = null, O = "#e67700", R = "#000000", B = "#ffcc00";
 
-    return [
-      [N,N,N,N,N,N,N,N,N,N],
-      [N,N,N,N,N,N,N,N,N,N],
-      [N,N,O,O,O,N,N,N,N,N],
-      [N,N,B,O,O,O,N,N,N,N],
-      [N,B,R,B,O,O,N,N,N,N],
-      [N,B,B,B,O,O,B,B,B,N],
-      [N,N,O,O,O,B,B,B,B,B],
-      [N,N,N,B,B,B,N,B,B,B],
-      [N,B,B,B,B,N,B,B,B,N],
-      [N,N,N,N,N,N,N,N,N,N]
-    ];
-  })(),
-},
-
+  // ─────────────────────────────────────────────
+  // POUR AJOUTER UN NIVEAU 15x15, utilisez ce template :
+  // {
+  //   id: 21, name: "Nom", emoji: "🎨",
+  //   cols: 15, rows: 15,
+  //   palette: ["#couleur1", "#couleur2"],
+  //   grid: (() => {
+  //     const N = null, A = "#couleur1", B = "#couleur2";
+  //     return [
+  //       [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N], // 15 colonnes
+  //       // ... 15 lignes au total
+  //     ];
+  //   })(),
+  // },
+  // ─────────────────────────────────────────────
 ];
