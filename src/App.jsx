@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-import { LEVELS, COLS, ROWS } from "./levels";
+import { LEVELS } from "./levels";
 import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
 import GridCell from "./components/GridCell";
@@ -38,9 +38,6 @@ function HomeScreen({ onPlay }) {
       fontFamily: "'Press Start 2P', monospace",
       gap: 40,
     }}>
-      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-
-      {/* Logo pixel art décoratif */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <div style={{ fontSize: 11, color: "#1a4a7a", letterSpacing: 3, textAlign: "center" }}>
           🪞 PIXEL
@@ -48,29 +45,21 @@ function HomeScreen({ onPlay }) {
         <div style={{ fontSize: 18, color: "#357ABD", letterSpacing: 4, textAlign: "center" }}>
           MIRROR
         </div>
-        <div style={{
-          width: 60, height: 3,
-          background: "linear-gradient(90deg, #4A90D9, #87CEEB)",
-          borderRadius: 2,
-        }} />
+        <div style={{ width: 60, height: 3, background: "linear-gradient(90deg, #4A90D9, #87CEEB)", borderRadius: 2 }} />
         <div style={{ fontSize: 7, color: "#7a9abb", letterSpacing: 2, marginTop: 4 }}>
           REPRODUIS LE PIXEL ART
         </div>
       </div>
 
-      {/* Bouton jouer */}
-      <button
-        onClick={() => { hapticButton(); onPlay(); }}
-        style={{
-          background: "linear-gradient(135deg, #4A90D9, #357ABD)",
-          color: "#fff", border: "none", borderRadius: 14,
-          padding: "16px 48px", fontSize: 12,
-          fontFamily: "'Press Start 2P', monospace",
-          cursor: "pointer",
-          boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
-          letterSpacing: 2,
-        }}
-      >
+      <button onClick={() => { hapticButton(); onPlay(); }} style={{
+        background: "linear-gradient(135deg, #4A90D9, #357ABD)",
+        color: "#fff", border: "none", borderRadius: 14,
+        padding: "16px 48px", fontSize: 12,
+        fontFamily: "'Press Start 2P', monospace",
+        cursor: "pointer",
+        boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
+        letterSpacing: 2,
+      }}>
         ▶ JOUER
       </button>
 
@@ -84,7 +73,7 @@ function HomeScreen({ onPlay }) {
 // ─────────────────────────────────────────────
 function GameScreen({ onHome }) {
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
-  const [userGrid, setUserGrid] = useState(() => Array(COLS * ROWS).fill(null));
+  const [userGrid, setUserGrid] = useState(() => Array(10 * 10).fill(null));
   const [selectedColor, setSelectedColor] = useState(null);
   const isDrawing = useRef(false);
   const [showCompare, setShowCompare] = useState(false);
@@ -96,26 +85,31 @@ function GameScreen({ onHome }) {
   const completedCount = useRef(0);
 
   const level = LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
-  const screenW = useWindowWidth();
 
-  const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 20);
-  const modelCell = Math.max(Math.floor(drawCell * 0.42), 8);
+  // Dimensions dynamiques selon le niveau
+  const COLS = level.cols ?? 10;
+  const ROWS = level.rows ?? 10;
+  const totalCells = COLS * ROWS;
+
+  const screenW = useWindowWidth();
+  const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 10);
+  const modelCell = Math.max(Math.floor(drawCell * 0.42), 5);
 
   // Reset grille à chaque nouveau niveau
   useEffect(() => {
-    setUserGrid(Array(COLS * ROWS).fill(null));
+    setUserGrid(Array(totalCells).fill(null));
     setSelectedColor(level.palette[0]);
-  }, [levelIdx]);
+  }, [levelIdx, totalCells]);
 
   const paint = useCallback((idx) => {
-    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= COLS * ROWS) return;
+    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= totalCells) return;
     sounds.paint();
     setUserGrid(prev => {
       const next = [...prev];
       next[idx] = selectedColor === "eraser" ? null : selectedColor;
       return next;
     });
-  }, [selectedColor]);
+  }, [selectedColor, totalCells]);
 
   const handleCellMouseDown = useCallback((e) => {
     isDrawing.current = true;
@@ -166,15 +160,15 @@ function GameScreen({ onHome }) {
   const handleRetry = useCallback(() => {
     hapticButton();
     setShowResult(false);
-    setUserGrid(Array(COLS * ROWS).fill(null));
-  }, []);
+    setUserGrid(Array(totalCells).fill(null));
+  }, [totalCells]);
 
   const modelGridStyle = useMemo(() => ({
     display: "grid",
     gridTemplateColumns: `repeat(${COLS}, ${modelCell}px)`,
     gap: 1, background: "#7aadcc", padding: 3, borderRadius: 6,
     boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
-  }), [modelCell]);
+  }), [COLS, modelCell]);
 
   return (
     <div
@@ -193,28 +187,18 @@ function GameScreen({ onHome }) {
         width: "100%", maxWidth: 540, display: "flex", alignItems: "center",
         justifyContent: "space-between", padding: "12px 16px", boxSizing: "border-box",
       }}>
-        {/* Gauche : accueil + catalogue */}
         <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => { hapticButton(); onHome(); }} style={{
-            background: "none", border: "none", fontSize: 22, cursor: "pointer"
-          }}>🏠</button>
-          <button onClick={() => setShowCatalogue(true)} style={{
-            background: "none", border: "none", fontSize: 22, cursor: "pointer"
-          }}>📖</button>
+          <button onClick={() => { hapticButton(); onHome(); }} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer" }}>🏠</button>
+          <button onClick={() => setShowCatalogue(true)} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer" }}>📖</button>
         </div>
-
-        {/* Centre : niveau */}
         <div style={{ fontSize: 10, fontWeight: "bold", textAlign: "center" }}>
           Level {level.id} — {level.name}
+          <div style={{ fontSize: 7, color: "#7a9abb", marginTop: 4 }}>{COLS}×{ROWS}</div>
         </div>
-
-        {/* Droite : reset */}
-        <button onClick={() => { hapticButton(); setUserGrid(Array(COLS * ROWS).fill(null)); }} style={{
-          background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9"
-        }}>🔄</button>
+        <button onClick={() => { hapticButton(); setUserGrid(Array(totalCells).fill(null)); }} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9" }}>🔄</button>
       </div>
 
-      {/* MODEL — small, on top */}
+      {/* MODEL */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 10 }}>
         <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>MODÈLE</div>
         <div style={modelGridStyle}>
@@ -228,7 +212,7 @@ function GameScreen({ onHome }) {
         </div>
       </div>
 
-      {/* DRAWING GRID — large, below */}
+      {/* DRAWING GRID */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 14, padding: "0 16px" }}>
         <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>TON DESSIN</div>
         <div
@@ -294,7 +278,13 @@ function GameScreen({ onHome }) {
       <div style={{ fontSize: 6, color: "#aaa", marginTop: 6 }}>© MoviSoft Co.,Ltd. — Fan Recreation</div>
 
       {showCompare && (
-        <CompareAnimation target={level.grid} userGrid={userGrid} drawCell={drawCell} onDone={handleCompareFinished} />
+        <CompareAnimation
+          target={level.grid}
+          userGrid={userGrid}
+          cols={COLS}
+          rows={ROWS}
+          onDone={handleCompareFinished}
+        />
       )}
       {showResult && (
         <ResultOverlay stars={lastStars} levelName={level.name} onNext={handleNext} onRetry={handleRetry} />
@@ -316,7 +306,6 @@ function GameScreen({ onHome }) {
 // ─────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("home");
-
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
