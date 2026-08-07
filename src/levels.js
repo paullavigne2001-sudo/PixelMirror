@@ -243,6 +243,31 @@ export const LEVELS = [
       ];
     })(),
   },
+    {
+    id: 23, name: "Kangourou", emoji: "🎨",
+    cols: 15, rows: 15,
+    palette: ["#fead12", "#3d5a1d", "#906521", "#90caf9", "#d2c39b", "#7ab043"],
+    grid: (() => {
+      const N = null, A = "#90caf9", B = "#fead12", C = "#3d5a1d", D = "#7ab043", E = "#906521", F = "#d2c39b";
+      return [
+        [A,B,A,A,A,B,A,A,A,A,A,C,C,C,C],
+        [A,B,B,A,B,B,A,A,C,D,A,C,C,E,D],
+        [A,A,E,B,E,A,A,C,C,D,D,C,C,E,E],
+        [A,A,B,B,B,A,A,C,E,E,D,D,C,C,E],
+        [A,A,F,E,F,A,A,C,C,E,E,E,D,C,E],
+        [A,A,A,F,B,A,A,A,C,C,C,E,E,E,E],
+        [A,A,A,B,B,B,A,A,A,A,A,A,A,E,E],
+        [B,B,B,B,B,B,B,B,B,B,B,B,A,A,E],
+        [B,A,A,B,B,B,B,B,B,B,B,B,B,A,E],
+        [A,A,B,B,B,B,B,B,B,B,B,B,B,A,E],
+        [A,A,B,A,A,B,B,B,B,B,B,B,B,A,E],
+        [A,A,A,A,A,A,B,B,B,B,B,B,B,A,E],
+        [D,D,D,D,D,D,D,B,B,D,D,B,B,B,E],
+        [D,D,D,D,D,D,B,B,B,D,D,D,B,B,E],
+        [D,D,D,D,B,B,B,B,B,D,D,D,D,B,B]
+      ];
+    })(),
+  },
   
   // ─────────────────────────────────────────────
   // POUR AJOUTER UN NIVEAU 15x15, utilisez ce template :
