@@ -183,7 +183,67 @@ export const LEVELS = [
       return [[N,N,N,N,N,N,N,N,S,N],[N,N,N,N,N,N,N,S,D,N],[N,N,N,N,N,N,S,D,N,N],[N,N,N,N,N,S,D,N,N,N],[N,G,G,N,S,D,N,N,N,N],[G,G,G,G,S,N,N,N,N,N],[N,G,G,B,N,N,N,N,N,N],[N,N,B,B,B,N,N,N,N,N],[N,B,B,N,B,B,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
     })(),
   },
-
+  {
+    id: 21, name: "Bateau", emoji: "🎨",
+    cols: 10, rows: 10,
+    palette: ["#D0021B", "#4A2C0A", "#863f03", "#195dc0", "#f62c2a", "#ffd836", "#de6e07"],
+    grid: (() => {
+      const N = null, A = "#D0021B", B = "#f62c2a", C = "#ffd836", D = "#863f03", E = "#de6e07", F = "#4A2C0A", G = "#195dc0";
+      return [
+        [A,B,C,C,A,B,C,C,C,C],
+        [C,A,B,C,C,A,B,C,C,C],
+        [C,A,B,C,C,A,B,C,C,C],
+        [B,B,B,C,A,A,B,C,C,C],
+        [C,C,D,C,C,D,C,C,E,D],
+        [D,E,D,E,E,D,E,E,D,D],
+        [D,D,D,D,D,D,D,D,D,C],
+        [F,F,F,F,F,F,F,F,F,G],
+        [G,F,F,F,F,F,F,F,G,G],
+        [G,G,G,G,G,G,G,G,G,G]
+      ];
+    })(),
+  },
+  {
+    id: 22, name: "Cigogne", emoji: "🎨",
+    cols: 10, rows: 10,
+    palette: ["#195dc0", "#a4ddfb", "#39a27c", "#dadfe2", "#1f271b", "#c97c4a", "#a1a1a0"],
+    grid: (() => {
+      const N = null, A = "#a4ddfb", B = "#1f271b", C = "#dadfe2", D = "#c97c4a", E = "#195dc0", F = "#a1a1a0", G = "#39a27c";
+      return [
+        [A,A,A,B,C,A,A,A,A,A],
+        [D,D,D,C,C,A,A,A,E,E],
+        [A,A,A,A,C,A,E,E,E,E],
+        [E,E,A,A,C,A,A,A,A,A],
+        [E,E,E,A,C,A,A,A,A,A],
+        [A,A,A,A,F,A,A,A,A,A],
+        [A,A,A,A,F,C,C,A,A,A],
+        [G,G,G,G,F,F,C,F,G,G],
+        [G,G,G,G,G,F,F,F,B,G],
+        [G,G,G,G,D,D,D,B,B,B]
+      ];
+    })(),
+  },
+  {
+    id: 23, name: "Frite", emoji: "🎨",
+    cols: 10, rows: 10,
+    palette: ["#F5A623", "#D0021B", "#a4ddfb", "#ffc900", "#e90028"],
+    grid: (() => {
+      const N = null, A = "#a4ddfb", B = "#F5A623", C = "#ffc900", D = "#D0021B", E = "#e90028";
+      return [
+        [A,A,A,A,B,C,A,A,C,A],
+        [A,B,C,A,B,C,A,B,C,A],
+        [C,B,C,A,B,C,A,B,C,C],
+        [C,B,C,C,C,B,B,C,B,C],
+        [C,B,C,C,C,B,B,C,B,C],
+        [D,C,B,C,B,B,B,C,B,D],
+        [D,E,B,C,B,B,C,B,E,D],
+        [D,E,E,E,E,E,E,E,D,D],
+        [D,D,E,E,E,E,E,E,D,D],
+        [D,D,D,E,E,E,D,D,D,D]
+      ];
+    })(),
+  },
+  
   // ─────────────────────────────────────────────
   // POUR AJOUTER UN NIVEAU 15x15, utilisez ce template :
   // {
