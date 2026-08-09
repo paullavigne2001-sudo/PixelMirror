@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { LEVELS } from "./levels";
 import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
+import { getActiveSeason } from "./seasons";
 import GridCell from "./components/GridCell";
 import AdScreen from "./components/AdScreen";
 import ResultOverlay from "./components/ResultOverlay";
@@ -26,44 +27,131 @@ function hapticButton() {
 }
 
 // ─────────────────────────────────────────────
-// ÉCRAN D'ACCUEIL
+// ÉCRAN D'ACCUEIL SAISONNIER
 // ─────────────────────────────────────────────
 function HomeScreen({ onPlay }) {
+  const season = getActiveSeason();
+  const hasImage = !!season.backgroundImage;
+
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
-      display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
       fontFamily: "'Press Start 2P', monospace",
-      gap: 40,
+      overflow: "hidden",
+      // Fond par défaut si pas d'image
+      background: hasImage
+        ? "#000"
+        : "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
     }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-        <div style={{ fontSize: 11, color: "#1a4a7a", letterSpacing: 3, textAlign: "center" }}>
-          🪞 PIXEL
+
+      {/* IMAGE DE FOND plein écran */}
+      {hasImage && (
+        <img
+          src={season.backgroundImage}
+          alt=""
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            imageRendering: "pixelated",
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* OVERLAY semi-transparent pour lisibilité */}
+      {hasImage && (
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: season.overlayColor,
+          zIndex: 1,
+        }} />
+      )}
+
+      {/* CONTENU par-dessus l'image */}
+      <div style={{
+        position: "relative",
+        zIndex: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 32,
+        padding: "0 24px",
+      }}>
+
+        {/* TITRE */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+          {season.emoji && (
+            <div style={{ fontSize: 36 }}>{season.emoji}</div>
+          )}
+          <div style={{
+            fontSize: 18,
+            color: season.titleColor,
+            letterSpacing: 4,
+            textAlign: "center",
+            textShadow: hasImage ? "0 2px 12px rgba(0,0,0,0.8)" : "none",
+          }}>
+            PIXEL MIRROR
+          </div>
+          <div style={{
+            width: 60, height: 2,
+            background: season.titleColor,
+            borderRadius: 1,
+            opacity: 0.6,
+          }} />
+          <div style={{
+            fontSize: 7,
+            color: season.taglineColor,
+            letterSpacing: 2,
+            textAlign: "center",
+            textShadow: hasImage ? "0 1px 8px rgba(0,0,0,0.9)" : "none",
+            lineHeight: 1.8,
+            maxWidth: 260,
+          }}>
+            {season.tagline}
+          </div>
         </div>
-        <div style={{ fontSize: 18, color: "#357ABD", letterSpacing: 4, textAlign: "center" }}>
-          MIRROR
-        </div>
-        <div style={{ width: 60, height: 3, background: "linear-gradient(90deg, #4A90D9, #87CEEB)", borderRadius: 2 }} />
-        <div style={{ fontSize: 7, color: "#7a9abb", letterSpacing: 2, marginTop: 4 }}>
-          REPRODUIS LE PIXEL ART
-        </div>
+
+        {/* BOUTON JOUER */}
+        <button
+          onClick={() => { hapticButton(); onPlay(); }}
+          style={{
+            background: season.buttonBg,
+            color: season.buttonColor,
+            border: "none",
+            borderRadius: 14,
+            padding: "16px 48px",
+            fontSize: 12,
+            fontFamily: "'Press Start 2P', monospace",
+            cursor: "pointer",
+            boxShadow: `0 5px 0 ${season.buttonShadow}, 0 8px 24px rgba(0,0,0,0.4)`,
+            letterSpacing: 2,
+          }}
+        >
+          ▶ JOUER
+        </button>
       </div>
 
-      <button onClick={() => { hapticButton(); onPlay(); }} style={{
-        background: "linear-gradient(135deg, #4A90D9, #357ABD)",
-        color: "#fff", border: "none", borderRadius: 14,
-        padding: "16px 48px", fontSize: 12,
-        fontFamily: "'Press Start 2P', monospace",
-        cursor: "pointer",
-        boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
-        letterSpacing: 2,
+      {/* COPYRIGHT en bas */}
+      <div style={{
+        position: "absolute",
+        bottom: 16,
+        fontSize: 6,
+        color: hasImage ? "rgba(255,255,255,0.4)" : "#aaa",
+        zIndex: 2,
+        textShadow: hasImage ? "0 1px 4px rgba(0,0,0,0.8)" : "none",
       }}>
-        ▶ JOUER
-      </button>
-
-      <div style={{ fontSize: 6, color: "#aaa" }}>© MoviSoft Co.,Ltd. — Fan Recreation</div>
+        © MoviSoft Co.,Ltd. — Fan Recreation
+      </div>
     </div>
   );
 }
@@ -85,8 +173,6 @@ function GameScreen({ onHome }) {
   const completedCount = useRef(0);
 
   const level = LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
-
-  // Dimensions dynamiques selon le niveau
   const COLS = level.cols ?? 10;
   const ROWS = level.rows ?? 10;
   const totalCells = COLS * ROWS;
@@ -95,7 +181,6 @@ function GameScreen({ onHome }) {
   const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 10);
   const modelCell = Math.max(Math.floor(drawCell * 0.42), 5);
 
-  // Reset grille à chaque nouveau niveau
   useEffect(() => {
     setUserGrid(Array(totalCells).fill(null));
     setSelectedColor(level.palette[0]);
@@ -278,13 +363,7 @@ function GameScreen({ onHome }) {
       <div style={{ fontSize: 6, color: "#aaa", marginTop: 6 }}>© MoviSoft Co.,Ltd. — Fan Recreation</div>
 
       {showCompare && (
-        <CompareAnimation
-          target={level.grid}
-          userGrid={userGrid}
-          cols={COLS}
-          rows={ROWS}
-          onDone={handleCompareFinished}
-        />
+        <CompareAnimation target={level.grid} userGrid={userGrid} cols={COLS} rows={ROWS} onDone={handleCompareFinished} />
       )}
       {showResult && (
         <ResultOverlay stars={lastStars} levelName={level.name} onNext={handleNext} onRetry={handleRetry} />
