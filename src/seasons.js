@@ -29,6 +29,7 @@ export const SEASONS = [
 
     // Fond semi-transparent derrière le titre (pour lisibilité)
     overlayColor: "rgba(0,0,0,0.45)",
+    accentColor: "#ff6600",
   },
 
   {
@@ -47,6 +48,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.40)",
+    accentColor: "#c41e1e",
   },
 
   {
@@ -65,6 +67,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.40)",
+    accentColor: "#8B008B",
   },
 
   {
@@ -83,6 +86,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.35)",
+    accentColor: "#ff1493",
   },
 
   {
@@ -101,6 +105,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.30)",
+    accentColor: "#FF69B4",
   },
 
   {
@@ -119,6 +124,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.25)",
+    accentColor: "#FF8C00",
   },
 
   {
@@ -137,6 +143,7 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.35)",
+    accentColor: "#D2691E",
   },
 ];
 
@@ -156,6 +163,7 @@ export const DEFAULT_SEASON = {
   buttonColor:  "#fff",
 
   overlayColor: "transparent",
+  accentColor: "#4A90D9",
 };
 
 // ─────────────────────────────────────────────────────────────
