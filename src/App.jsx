@@ -43,7 +43,6 @@ function HomeScreen({ onPlay }) {
       justifyContent: "center",
       fontFamily: "'Press Start 2P', monospace",
       overflow: "hidden",
-      // Fond par défaut si pas d'image
       background: hasImage
         ? "#000"
         : "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
@@ -67,7 +66,7 @@ function HomeScreen({ onPlay }) {
         />
       )}
 
-      {/* OVERLAY semi-transparent pour lisibilité */}
+      {/* OVERLAY semi-transparent */}
       {hasImage && (
         <div style={{
           position: "absolute",
@@ -77,7 +76,7 @@ function HomeScreen({ onPlay }) {
         }} />
       )}
 
-      {/* CONTENU par-dessus l'image */}
+      {/* CONTENU */}
       <div style={{
         position: "relative",
         zIndex: 2,
@@ -90,9 +89,6 @@ function HomeScreen({ onPlay }) {
 
         {/* TITRE */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-          {season.emoji && (
-            <div style={{ fontSize: 36 }}>{season.emoji}</div>
-          )}
           <div style={{
             fontSize: 18,
             color: season.titleColor,
@@ -102,12 +98,6 @@ function HomeScreen({ onPlay }) {
           }}>
             PIXEL MIRROR
           </div>
-          <div style={{
-            width: 60, height: 2,
-            background: season.titleColor,
-            borderRadius: 1,
-            opacity: 0.6,
-          }} />
           <div style={{
             fontSize: 7,
             color: season.taglineColor,
@@ -139,18 +129,6 @@ function HomeScreen({ onPlay }) {
         >
           ▶ JOUER
         </button>
-      </div>
-
-      {/* COPYRIGHT en bas */}
-      <div style={{
-        position: "absolute",
-        bottom: 16,
-        fontSize: 6,
-        color: hasImage ? "rgba(255,255,255,0.4)" : "#aaa",
-        zIndex: 2,
-        textShadow: hasImage ? "0 1px 4px rgba(0,0,0,0.8)" : "none",
-      }}>
-        © MoviSoft Co.,Ltd. — Fan Recreation
       </div>
     </div>
   );
@@ -359,8 +337,6 @@ function GameScreen({ onHome }) {
       }}>
         DONE ✓
       </button>
-
-      <div style={{ fontSize: 6, color: "#aaa", marginTop: 6 }}>© MoviSoft Co.,Ltd. — Fan Recreation</div>
 
       {showCompare && (
         <CompareAnimation target={level.grid} userGrid={userGrid} cols={COLS} rows={ROWS} onDone={handleCompareFinished} />
