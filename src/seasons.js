@@ -12,8 +12,8 @@
 export const SEASONS = [
   {
     name: "Halloween",
-    dateStart: "10-15",
-    dateEnd:   "11-01",
+    dateStart: "01-01",
+    dateEnd:   "12-31",
     backgroundImage: "/seasons/halloween.png",
 
     // Texte affiché sur l'écran d'accueil
