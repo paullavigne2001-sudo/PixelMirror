@@ -27,6 +27,62 @@ function hapticButton() {
 }
 
 // ─────────────────────────────────────────────
+// UTILITAIRES COULEUR
+// ─────────────────────────────────────────────
+
+// Convertit un hex en RGB
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return [r, g, b];
+}
+
+// Éclaircit une couleur RGB vers une version pastel douce
+function toPastel(r, g, b, strength = 0.72) {
+  const pr = Math.round(r + (255 - r) * strength);
+  const pg = Math.round(g + (255 - g) * strength);
+  const pb = Math.round(b + (255 - b) * strength);
+  return `rgb(${pr},${pg},${pb})`;
+}
+
+// Mélange deux couleurs RGB avec un ratio (0 = full a, 1 = full b)
+function mixRgb(a, b, ratio = 0.15) {
+  return [
+    Math.round(a[0] + (b[0] - a[0]) * ratio),
+    Math.round(a[1] + (b[1] - a[1]) * ratio),
+    Math.round(a[2] + (b[2] - a[2]) * ratio),
+  ];
+}
+
+// Calcule le dégradé de fond selon la palette du niveau + teinte saisonnière
+function computeGameBackground(palette, season) {
+  if (!palette || palette.length === 0) {
+    return "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)";
+  }
+
+  // Prend la 1ère et dernière couleur de la palette
+  const col1 = hexToRgb(palette[0]);
+  const col2 = hexToRgb(palette[palette.length - 1]);
+
+  // Teinte saisonnière : couleur extraite du bouton de la saison
+  let seasonTint = null;
+  if (season && season.accentColor) {
+    try { seasonTint = hexToRgb(season.accentColor); } catch {}
+  }
+
+  // Mélange léger avec la teinte saisonnière (15%)
+  const mixed1 = seasonTint ? mixRgb(col1, seasonTint, 0.15) : col1;
+  const mixed2 = seasonTint ? mixRgb(col2, seasonTint, 0.15) : col2;
+
+  // Passe en version pastel douce pour ne pas agresser les yeux
+  const pastel1 = toPastel(...mixed1, 0.70);
+  const pastel2 = toPastel(...mixed2, 0.55);
+
+  return `linear-gradient(160deg, ${pastel1} 0%, ${pastel2} 100%)`;
+}
+
+// ─────────────────────────────────────────────
 // ÉCRAN D'ACCUEIL SAISONNIER
 // ─────────────────────────────────────────────
 function HomeScreen({ onPlay }) {
@@ -62,6 +118,8 @@ function HomeScreen({ onPlay }) {
             objectPosition: "center",
             imageRendering: "pixelated",
             zIndex: 0,
+            border: "none",
+            display: "block",
           }}
         />
       )}
@@ -86,8 +144,6 @@ function HomeScreen({ onPlay }) {
         gap: 32,
         padding: "0 24px",
       }}>
-
-        {/* TITRE */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
           <div style={{
             fontSize: 18,
@@ -111,7 +167,6 @@ function HomeScreen({ onPlay }) {
           </div>
         </div>
 
-        {/* BOUTON JOUER */}
         <button
           onClick={() => { hapticButton(); onPlay(); }}
           style={{
@@ -158,6 +213,13 @@ function GameScreen({ onHome }) {
   const screenW = useWindowWidth();
   const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 10);
   const modelCell = Math.max(Math.floor(drawCell * 0.42), 5);
+
+  // Dégradé dynamique selon palette + saison
+  const season = getActiveSeason();
+  const gameBg = useMemo(
+    () => computeGameBackground(level.palette, season),
+    [level.id, season.name]
+  );
 
   useEffect(() => {
     setUserGrid(Array(totalCells).fill(null));
@@ -237,7 +299,8 @@ function GameScreen({ onHome }) {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
+        background: gameBg,
+        transition: "background 0.6s ease",
         display: "flex", flexDirection: "column", alignItems: "center",
         fontFamily: "'Press Start 2P', monospace",
         userSelect: "none", paddingBottom: 32, overflowX: "hidden",
