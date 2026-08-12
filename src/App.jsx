@@ -100,13 +100,15 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
         </div>
 
         {/* JOUER */}
-        <button onClick={() => { hapticButton(); onPlay(); }} style={{
-          background: season.buttonBg, color: season.buttonColor,
-          border: "none", borderRadius: 14, padding: "16px 48px",
-          fontSize: 12, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-          boxShadow: `0 5px 0 ${season.buttonShadow}, 0 8px 24px rgba(0,0,0,0.4)`,
-          letterSpacing: 2, width: "100%",
-        }}>▶ JOUER</button>
+<button onClick={() => { hapticButton(); onPlay(); }} style={{
+  background: "rgba(0,0,0,0.55)",
+  color: "#fff",
+  border: "2px solid rgba(255,255,255,0.3)",
+  borderRadius: 14, padding: "16px 48px",
+  fontSize: 12, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
+  letterSpacing: 2, width: "100%",
+  backdropFilter: "blur(4px)",
+}}>▶ JOUER</button>
 
         {/* DÉFI DU MOIS */}
         <button onClick={() => { hapticButton(); onDailyCalendar(); }} style={{
