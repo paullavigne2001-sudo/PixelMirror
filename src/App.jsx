@@ -52,13 +52,26 @@ function computeGameBackground(palette, season) {
 }
 
 // ─────────────────────────────────────────────
+// STYLE BOUTON COMMUN (transparent)
+// ─────────────────────────────────────────────
+const btnStyle = {
+  background: "rgba(0,0,0,0.55)",
+  color: "#fff",
+  border: "2px solid rgba(255,255,255,0.25)",
+  borderRadius: 14,
+  fontFamily: "'Press Start 2P', monospace",
+  cursor: "pointer",
+  width: "100%",
+  backdropFilter: "blur(4px)",
+  letterSpacing: 1,
+};
+
+// ─────────────────────────────────────────────
 // ÉCRAN D'ACCUEIL
 // ─────────────────────────────────────────────
 function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
   const season = getActiveSeason();
   const hasImage = !!season.backgroundImage;
-  const dailyEntry = getTodayEntry();
-  const dailyDone = dailyEntry?.completed === true;
   const monthData = getCurrentMonthData();
 
   return (
@@ -70,6 +83,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
       overflow: "hidden",
       background: hasImage ? "#000" : "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
     }}>
+
       {hasImage && (
         <img src={season.backgroundImage} alt="" style={{
           position: "absolute", inset: 0, width: "100%", height: "100%",
@@ -84,10 +98,11 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
       <div style={{
         position: "relative", zIndex: 2,
         display: "flex", flexDirection: "column", alignItems: "center",
-        gap: 16, padding: "0 24px", width: "100%", maxWidth: 360,
+        gap: 14, padding: "0 24px", width: "100%", maxWidth: 360,
       }}>
+
         {/* TITRE */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 12 }}>
           <div style={{
             fontSize: 18, color: season.titleColor, letterSpacing: 4, textAlign: "center",
             textShadow: hasImage ? "0 2px 12px rgba(0,0,0,0.8)" : "none",
@@ -100,48 +115,33 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
         </div>
 
         {/* JOUER */}
-<button onClick={() => { hapticButton(); onPlay(); }} style={{
-  background: "rgba(0,0,0,0.55)",
-  color: "#fff",
-  border: "2px solid rgba(255,255,255,0.3)",
-  borderRadius: 14, padding: "16px 48px",
-  fontSize: 12, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-  letterSpacing: 2, width: "100%",
-  backdropFilter: "blur(4px)",
-}}>▶ JOUER</button>
+        <button onClick={() => { hapticButton(); onPlay(); }} style={{
+          ...btnStyle, padding: "16px 48px", fontSize: 12,
+        }}>▶ JOUER</button>
 
-        {/* DÉFI DU MOIS */}
+        {/* DÉFIS DU MOIS */}
         <button onClick={() => { hapticButton(); onDailyCalendar(); }} style={{
-          background: "rgba(0,0,0,0.55)",
-          color: "#fff",
-          border: dailyDone
-            ? "2px solid rgba(100,200,50,0.5)"
-            : "2px solid rgba(255,255,255,0.2)",
-          borderRadius: 14, padding: "14px 20px",
-          fontSize: 8, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-          width: "100%", letterSpacing: 1, backdropFilter: "blur(4px)",
+          ...btnStyle, padding: "14px 20px", fontSize: 8,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 18 }}>📅</span>
-<div style={{ textAlign: "left", flex: 1 }}>
-  <div>DÉFIS DU MOIS</div>
-  {monthData.rewardUnlocked && (
-    <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>
-      🏆 COUPE OBTENUE !
-    </div>
-  )}
-</div>
+            <div style={{ textAlign: "left", flex: 1 }}>
+              <div>DÉFIS DU MOIS</div>
+              {monthData.rewardUnlocked && (
+                <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>
+                  🏆 COUPE OBTENUE !
+                </div>
+              )}
+            </div>
           </div>
         </button>
 
         {/* RÉCOMPENSES */}
         <button onClick={() => { hapticButton(); onRewards(); }} style={{
-          background: "rgba(0,0,0,0.4)", color: "#FFD700",
+          ...btnStyle, padding: "12px 20px", fontSize: 8, color: "#FFD700",
           border: "2px solid rgba(255,215,0,0.3)",
-          borderRadius: 14, padding: "12px 20px",
-          fontSize: 8, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-          width: "100%", letterSpacing: 1, backdropFilter: "blur(4px)",
         }}>🏆 MES RÉCOMPENSES</button>
+
       </div>
     </div>
   );
@@ -152,8 +152,6 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
 // ─────────────────────────────────────────────
 function GameScreen({ onHome, dailyDate = null }) {
   const isDaily = !!dailyDate;
-
-  // Niveau : défi journalier (date fixe) ou niveau standard
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
   const level = isDaily
     ? getLevelForDate(dailyDate)
@@ -223,12 +221,10 @@ function GameScreen({ onHome, dailyDate = null }) {
     setLastStars(stars);
     hapticStars(stars);
     setCatalogue(prev => ({ ...prev, [level.id]: Math.max(prev[level.id] ?? -1, stars) }));
-
     if (isDaily && stars > 0) {
       const { isNewMonthReward: newReward } = completeDailyChallenge(dailyDate, level.id, stars);
       setIsNewMonthReward(newReward);
     }
-
     setShowResult(true);
     completedCount.current += 1;
   }, [level, isDaily, dailyDate]);
@@ -394,7 +390,6 @@ export default function App() {
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-
       {screen === "home" && (
         <HomeScreen
           onPlay={() => setScreen("game")}
@@ -406,25 +401,16 @@ export default function App() {
         <GameScreen onHome={() => setScreen("home")} dailyDate={null} />
       )}
       {screen === "daily" && (
-        <GameScreen
-          onHome={() => setScreen("calendar")}
-          dailyDate={dailyDate}
-        />
+        <GameScreen onHome={() => setScreen("calendar")} dailyDate={dailyDate} />
       )}
       {screen === "calendar" && (
         <DailyCalendarScreen
           onClose={() => setScreen("home")}
-          onPlay={(dateStr, level) => {
-            setDailyDate(dateStr);
-            setScreen("daily");
-          }}
+          onPlay={(dateStr) => { setDailyDate(dateStr); setScreen("daily"); }}
         />
       )}
       {screen === "rewards" && (
-        <RewardsScreen
-          onClose={() => setScreen("home")}
-          trophyImg="/rewards/trophy.png"
-        />
+        <RewardsScreen onClose={() => setScreen("home")} trophyImg="/rewards/trophy.png" />
       )}
     </>
   );
