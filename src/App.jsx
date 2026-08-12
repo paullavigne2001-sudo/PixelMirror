@@ -4,8 +4,8 @@ import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
 import { getActiveSeason } from "./seasons";
 import {
-  getDailyLevel, getTodayEntry, completeDailyChallenge,
-  getCurrentMonthData, todayKey,
+  getLevelForDate, getTodayEntry, completeDailyChallenge,
+  getCurrentMonthData, todayKey, formatDate,
 } from "./daily";
 import GridCell from "./components/GridCell";
 import AdScreen from "./components/AdScreen";
@@ -13,6 +13,7 @@ import ResultOverlay from "./components/ResultOverlay";
 import CompareAnimation from "./components/CompareAnimation";
 import CatalogueScreen from "./components/CatalogueScreen";
 import RewardsScreen from "./components/RewardsScreen";
+import DailyCalendarScreen from "./components/DailyCalendarScreen";
 
 // ─────────────────────────────────────────────
 // HAPTIQUE
@@ -28,46 +29,37 @@ function hapticStars(count) {
 function hapticButton() { try { navigator.vibrate(18); } catch {} }
 
 // ─────────────────────────────────────────────
-// COULEUR DE FOND DYNAMIQUE
+// FOND DYNAMIQUE
 // ─────────────────────────────────────────────
 function hexToRgb(hex) {
-  return [
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16),
-  ];
+  return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
 }
-function toPastel(r, g, b, strength = 0.72) {
-  return `rgb(${Math.round(r + (255 - r) * strength)},${Math.round(g + (255 - g) * strength)},${Math.round(b + (255 - b) * strength)})`;
+function toPastel(r, g, b, s = 0.72) {
+  return `rgb(${Math.round(r+(255-r)*s)},${Math.round(g+(255-g)*s)},${Math.round(b+(255-b)*s)})`;
 }
-function mixRgb(a, b, ratio = 0.15) {
-  return [
-    Math.round(a[0] + (b[0] - a[0]) * ratio),
-    Math.round(a[1] + (b[1] - a[1]) * ratio),
-    Math.round(a[2] + (b[2] - a[2]) * ratio),
-  ];
+function mixRgb(a, b, t = 0.15) {
+  return [Math.round(a[0]+(b[0]-a[0])*t), Math.round(a[1]+(b[1]-a[1])*t), Math.round(a[2]+(b[2]-a[2])*t)];
 }
 function computeGameBackground(palette, season) {
-  if (!palette || palette.length === 0) return "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)";
-  const col1 = hexToRgb(palette[0]);
-  const col2 = hexToRgb(palette[palette.length - 1]);
-  let seasonTint = null;
-  if (season?.accentColor) { try { seasonTint = hexToRgb(season.accentColor); } catch {} }
-  const mixed1 = seasonTint ? mixRgb(col1, seasonTint, 0.15) : col1;
-  const mixed2 = seasonTint ? mixRgb(col2, seasonTint, 0.15) : col2;
-  return `linear-gradient(160deg, ${toPastel(...mixed1, 0.70)} 0%, ${toPastel(...mixed2, 0.55)} 100%)`;
+  if (!palette?.length) return "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)";
+  const c1 = hexToRgb(palette[0]);
+  const c2 = hexToRgb(palette[palette.length - 1]);
+  let tint = null;
+  if (season?.accentColor) { try { tint = hexToRgb(season.accentColor); } catch {} }
+  const m1 = tint ? mixRgb(c1, tint, 0.15) : c1;
+  const m2 = tint ? mixRgb(c2, tint, 0.15) : c2;
+  return `linear-gradient(160deg, ${toPastel(...m1, 0.70)} 0%, ${toPastel(...m2, 0.55)} 100%)`;
 }
 
 // ─────────────────────────────────────────────
 // ÉCRAN D'ACCUEIL
 // ─────────────────────────────────────────────
-function HomeScreen({ onPlay, onDaily, onRewards }) {
+function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
   const season = getActiveSeason();
   const hasImage = !!season.backgroundImage;
   const dailyEntry = getTodayEntry();
   const dailyDone = dailyEntry?.completed === true;
   const monthData = getCurrentMonthData();
-  const dailyLevel = getDailyLevel();
 
   return (
     <div style={{
@@ -78,8 +70,6 @@ function HomeScreen({ onPlay, onDaily, onRewards }) {
       overflow: "hidden",
       background: hasImage ? "#000" : "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
     }}>
-
-      {/* IMAGE DE FOND */}
       {hasImage && (
         <img src={season.backgroundImage} alt="" style={{
           position: "absolute", inset: 0, width: "100%", height: "100%",
@@ -91,15 +81,13 @@ function HomeScreen({ onPlay, onDaily, onRewards }) {
         <div style={{ position: "absolute", inset: 0, background: season.overlayColor, zIndex: 1 }} />
       )}
 
-      {/* CONTENU */}
       <div style={{
         position: "relative", zIndex: 2,
         display: "flex", flexDirection: "column", alignItems: "center",
-        gap: 20, padding: "0 24px", width: "100%", maxWidth: 360,
+        gap: 16, padding: "0 24px", width: "100%", maxWidth: 360,
       }}>
-
         {/* TITRE */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 8 }}>
           <div style={{
             fontSize: 18, color: season.titleColor, letterSpacing: 4, textAlign: "center",
             textShadow: hasImage ? "0 2px 12px rgba(0,0,0,0.8)" : "none",
@@ -111,7 +99,7 @@ function HomeScreen({ onPlay, onDaily, onRewards }) {
           }}>{season.tagline}</div>
         </div>
 
-        {/* BOUTON JOUER */}
+        {/* JOUER */}
         <button onClick={() => { hapticButton(); onPlay(); }} style={{
           background: season.buttonBg, color: season.buttonColor,
           border: "none", borderRadius: 14, padding: "16px 48px",
@@ -120,44 +108,49 @@ function HomeScreen({ onPlay, onDaily, onRewards }) {
           letterSpacing: 2, width: "100%",
         }}>▶ JOUER</button>
 
-        {/* BOUTON DÉFI DU JOUR */}
-        <button onClick={() => { hapticButton(); onDaily(); }} style={{
-          background: dailyDone
-            ? "rgba(65,117,5,0.85)"
-            : "rgba(0,0,0,0.55)",
-          color: "#fff", border: dailyDone
-            ? "2px solid rgba(100,200,50,0.6)"
-            : "2px solid rgba(255,255,255,0.25)",
+        {/* DÉFI DU MOIS */}
+        <button onClick={() => { hapticButton(); onDailyCalendar(); }} style={{
+          background: "rgba(0,0,0,0.55)",
+          color: "#fff",
+          border: dailyDone
+            ? "2px solid rgba(100,200,50,0.5)"
+            : "2px solid rgba(255,255,255,0.2)",
           borderRadius: 14, padding: "14px 20px",
           fontSize: 8, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-          width: "100%", letterSpacing: 1,
-          backdropFilter: "blur(4px)",
+          width: "100%", letterSpacing: 1, backdropFilter: "blur(4px)",
         }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
-            <span style={{ fontSize: 16 }}>{dailyDone ? "✅" : "📅"}</span>
-            <div style={{ textAlign: "left" }}>
-              <div style={{ marginBottom: 4 }}>
-                {dailyDone ? "DÉFI DU JOUR FAIT !" : "DÉFI DU JOUR"}
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 18 }}>📅</span>
+            <div style={{ textAlign: "left", flex: 1 }}>
+              <div style={{ marginBottom: 5 }}>DÉFIS DU MOIS</div>
+              {/* Mini barre de progression */}
+              <div style={{
+                height: 5, borderRadius: 3,
+                background: "rgba(255,255,255,0.15)", overflow: "hidden",
+                marginBottom: 4,
+              }}>
+                <div style={{
+                  height: "100%", borderRadius: 3,
+                  width: `${monthData.playableDays > 0 ? Math.round(monthData.daysCompleted.length / monthData.playableDays * 100) : 0}%`,
+                  background: "linear-gradient(90deg, #4A90D9, #87CEEB)",
+                }} />
               </div>
-              <div style={{ fontSize: 6, color: "rgba(255,255,255,0.6)", fontWeight: "normal" }}>
-                {dailyLevel.name} — {monthData.daysCompleted.length}/{monthData.total} jours ce mois
+              <div style={{ fontSize: 6, color: "rgba(255,255,255,0.5)" }}>
+                {monthData.daysCompleted.length}/{monthData.playableDays} jours ce mois
+                {monthData.rewardUnlocked ? " 🏆" : ""}
               </div>
             </div>
           </div>
         </button>
 
-        {/* BOUTON RÉCOMPENSES */}
+        {/* RÉCOMPENSES */}
         <button onClick={() => { hapticButton(); onRewards(); }} style={{
-          background: "rgba(0,0,0,0.4)",
-          color: "#FFD700",
+          background: "rgba(0,0,0,0.4)", color: "#FFD700",
           border: "2px solid rgba(255,215,0,0.3)",
           borderRadius: 14, padding: "12px 20px",
           fontSize: 8, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-          width: "100%", letterSpacing: 1,
-          backdropFilter: "blur(4px)",
-        }}>
-          🏆 MES RÉCOMPENSES
-        </button>
+          width: "100%", letterSpacing: 1, backdropFilter: "blur(4px)",
+        }}>🏆 MES RÉCOMPENSES</button>
       </div>
     </div>
   );
@@ -166,12 +159,21 @@ function HomeScreen({ onPlay, onDaily, onRewards }) {
 // ─────────────────────────────────────────────
 // ÉCRAN DE JEU
 // ─────────────────────────────────────────────
-function GameScreen({ onHome, isDaily = false }) {
-  const dailyLevel = getDailyLevel();
+function GameScreen({ onHome, dailyDate = null }) {
+  const isDaily = !!dailyDate;
 
+  // Niveau : défi journalier (date fixe) ou niveau standard
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
-  const [userGrid, setUserGrid] = useState(() => Array(10 * 10).fill(null));
-  const [selectedColor, setSelectedColor] = useState(null);
+  const level = isDaily
+    ? getLevelForDate(dailyDate)
+    : LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
+
+  const COLS = level.cols ?? 10;
+  const ROWS = level.rows ?? 10;
+  const totalCells = COLS * ROWS;
+
+  const [userGrid, setUserGrid] = useState(() => Array(totalCells).fill(null));
+  const [selectedColor, setSelectedColor] = useState(level.palette[0]);
   const isDrawing = useRef(false);
   const [showCompare, setShowCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -182,24 +184,11 @@ function GameScreen({ onHome, isDaily = false }) {
   const [catalogue, setCatalogue] = usePersistedState("pag_catalogue", {});
   const completedCount = useRef(0);
 
-  // En mode défi du jour, on force le niveau du jour
-  const level = isDaily
-    ? dailyLevel
-    : LEVELS[Math.min(levelIdx, LEVELS.length - 1)];
-
-  const COLS = level.cols ?? 10;
-  const ROWS = level.rows ?? 10;
-  const totalCells = COLS * ROWS;
-
   const screenW = useWindowWidth();
   const drawCell = Math.max(Math.floor((screenW - 32 - (COLS - 1) - 8) / COLS), 10);
   const modelCell = Math.max(Math.floor(drawCell * 0.42), 5);
-
   const season = getActiveSeason();
-  const gameBg = useMemo(
-    () => computeGameBackground(level.palette, season),
-    [level.id, season.name]
-  );
+  const gameBg = useMemo(() => computeGameBackground(level.palette, season), [level.id, season.name]);
 
   useEffect(() => {
     setUserGrid(Array(totalCells).fill(null));
@@ -207,7 +196,7 @@ function GameScreen({ onHome, isDaily = false }) {
   }, [level.id, totalCells]);
 
   const paint = useCallback((idx) => {
-    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= totalCells) return;
+    if (idx == null || isNaN(idx) || idx < 0 || idx >= totalCells) return;
     sounds.paint();
     setUserGrid(prev => {
       const next = [...prev];
@@ -233,11 +222,7 @@ function GameScreen({ onHome, isDaily = false }) {
     if (el?.dataset?.cellidx !== undefined) paint(parseInt(el.dataset.cellidx));
   }, [paint]);
 
-  const handleDone = useCallback(() => {
-    sounds.done();
-    hapticDone();
-    setShowCompare(true);
-  }, []);
+  const handleDone = useCallback(() => { sounds.done(); hapticDone(); setShowCompare(true); }, []);
 
   const handleCompareFinished = useCallback((errCount) => {
     setShowCompare(false);
@@ -246,22 +231,19 @@ function GameScreen({ onHome, isDaily = false }) {
     if (errCount > 0) stars = errCount > nonEmpty * 0.15 ? 1 : 2;
     setLastStars(stars);
     hapticStars(stars);
-
-    // Mise à jour catalogue
     setCatalogue(prev => ({ ...prev, [level.id]: Math.max(prev[level.id] ?? -1, stars) }));
 
-    // Défi du jour : enregistre la complétion
     if (isDaily && stars > 0) {
-      const { isNewMonthReward: newReward } = completeDailyChallenge(level.id, stars);
+      const { isNewMonthReward: newReward } = completeDailyChallenge(dailyDate, level.id, stars);
       setIsNewMonthReward(newReward);
     }
 
     setShowResult(true);
     completedCount.current += 1;
-  }, [level, isDaily]);
+  }, [level, isDaily, dailyDate]);
 
   const goNext = useCallback(() => {
-    if (isDaily) { onHome(); return; } // après le défi du jour → retour accueil
+    if (isDaily) { onHome(); return; }
     setLevelIdx(i => Math.min(i + 1, LEVELS.length - 1));
   }, [isDaily]);
 
@@ -308,7 +290,11 @@ function GameScreen({ onHome, isDaily = false }) {
           )}
         </div>
         <div style={{ fontSize: 10, fontWeight: "bold", textAlign: "center" }}>
-          {isDaily && <div style={{ fontSize: 6, color: "#4A90D9", marginBottom: 4, letterSpacing: 1 }}>📅 DÉFI DU JOUR</div>}
+          {isDaily && (
+            <div style={{ fontSize: 6, color: "#4A90D9", marginBottom: 4, letterSpacing: 1 }}>
+              📅 {dailyDate}
+            </div>
+          )}
           {level.name}
           <div style={{ fontSize: 7, color: "#7a9abb", marginTop: 4 }}>{COLS}×{ROWS}</div>
         </div>
@@ -343,10 +329,8 @@ function GameScreen({ onHome, isDaily = false }) {
           onTouchMove={handleTouchMove}
         >
           {userGrid.map((cellColor, idx) => (
-            <GridCell
-              key={idx} idx={idx} color={cellColor} size={drawCell}
-              onPaint={handleCellMouseDown} onEnter={handleCellMouseEnter}
-            />
+            <GridCell key={idx} idx={idx} color={cellColor} size={drawCell}
+              onPaint={handleCellMouseDown} onEnter={handleCellMouseEnter} />
           ))}
         </div>
       </div>
@@ -391,12 +375,9 @@ function GameScreen({ onHome, isDaily = false }) {
       )}
       {showResult && (
         <ResultOverlay
-          stars={lastStars}
-          levelName={level.name}
-          onNext={handleNext}
-          onRetry={handleRetry}
-          isDaily={isDaily}
-          isNewMonthReward={isNewMonthReward}
+          stars={lastStars} levelName={level.name}
+          onNext={handleNext} onRetry={handleRetry}
+          isDaily={isDaily} isNewMonthReward={isNewMonthReward}
           trophyImg="/rewards/trophy.png"
         />
       )}
@@ -416,8 +397,8 @@ function GameScreen({ onHome, isDaily = false }) {
 // APP PRINCIPALE
 // ─────────────────────────────────────────────
 export default function App() {
-  // "home" | "game" | "daily" | "rewards"
   const [screen, setScreen] = useState("home");
+  const [dailyDate, setDailyDate] = useState(null);
 
   return (
     <>
@@ -426,15 +407,27 @@ export default function App() {
       {screen === "home" && (
         <HomeScreen
           onPlay={() => setScreen("game")}
-          onDaily={() => setScreen("daily")}
+          onDailyCalendar={() => setScreen("calendar")}
           onRewards={() => setScreen("rewards")}
         />
       )}
       {screen === "game" && (
-        <GameScreen onHome={() => setScreen("home")} isDaily={false} />
+        <GameScreen onHome={() => setScreen("home")} dailyDate={null} />
       )}
       {screen === "daily" && (
-        <GameScreen onHome={() => setScreen("home")} isDaily={true} />
+        <GameScreen
+          onHome={() => setScreen("calendar")}
+          dailyDate={dailyDate}
+        />
+      )}
+      {screen === "calendar" && (
+        <DailyCalendarScreen
+          onClose={() => setScreen("home")}
+          onPlay={(dateStr, level) => {
+            setDailyDate(dateStr);
+            setScreen("daily");
+          }}
+        />
       )}
       {screen === "rewards" && (
         <RewardsScreen
