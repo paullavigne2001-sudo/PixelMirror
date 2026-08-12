@@ -20,9 +20,6 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
   const today = formatDate(new Date());
 
   // Progression du mois
-  const pct = monthData.playableDays > 0
-    ? Math.round((monthData.daysCompleted.length / monthData.playableDays) * 100)
-    : 0;
 
   return (
     <div style={{
@@ -80,34 +77,6 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
                 padding: "4px 8px",
               }}
             >▶</button>
-          </div>
-
-          {/* BARRE DE PROGRESSION */}
-          <div style={{ marginBottom: 16 }}>
-            <div style={{
-              display: "flex", justifyContent: "space-between",
-              fontSize: 6, color: "#aaa", marginBottom: 6,
-            }}>
-              <span>{monthData.daysCompleted.length} / {monthData.playableDays} jours complétés</span>
-              <span style={{ color: pct === 100 ? "#FFD700" : "#4A90D9" }}>{pct}%</span>
-            </div>
-            <div style={{
-              height: 8, borderRadius: 4, background: "rgba(255,255,255,0.08)", overflow: "hidden",
-            }}>
-              <div style={{
-                height: "100%", borderRadius: 4,
-                width: `${pct}%`,
-                background: pct === 100
-                  ? "linear-gradient(90deg, #FFD700, #FFA500)"
-                  : "linear-gradient(90deg, #4A90D9, #87CEEB)",
-                transition: "width 0.4s ease",
-              }} />
-            </div>
-            {monthData.rewardUnlocked && (
-              <div style={{ fontSize: 6, color: "#FFD700", marginTop: 6, textAlign: "center" }}>
-                🏆 COUPE DU MOIS OBTENUE !
-              </div>
-            )}
           </div>
 
           {/* EN-TÊTES JOURS */}
