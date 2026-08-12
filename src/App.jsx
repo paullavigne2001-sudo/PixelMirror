@@ -123,25 +123,14 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 18 }}>📅</span>
-            <div style={{ textAlign: "left", flex: 1 }}>
-              <div style={{ marginBottom: 5 }}>DÉFIS DU MOIS</div>
-              {/* Mini barre de progression */}
-              <div style={{
-                height: 5, borderRadius: 3,
-                background: "rgba(255,255,255,0.15)", overflow: "hidden",
-                marginBottom: 4,
-              }}>
-                <div style={{
-                  height: "100%", borderRadius: 3,
-                  width: `${monthData.playableDays > 0 ? Math.round(monthData.daysCompleted.length / monthData.playableDays * 100) : 0}%`,
-                  background: "linear-gradient(90deg, #4A90D9, #87CEEB)",
-                }} />
-              </div>
-              <div style={{ fontSize: 6, color: "rgba(255,255,255,0.5)" }}>
-                {monthData.daysCompleted.length}/{monthData.playableDays} jours ce mois
-                {monthData.rewardUnlocked ? " 🏆" : ""}
-              </div>
-            </div>
+<div style={{ textAlign: "left", flex: 1 }}>
+  <div>DÉFIS DU MOIS</div>
+  {monthData.rewardUnlocked && (
+    <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>
+      🏆 COUPE OBTENUE !
+    </div>
+  )}
+</div>
           </div>
         </button>
 
