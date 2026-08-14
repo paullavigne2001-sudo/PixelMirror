@@ -29,7 +29,6 @@ export const SEASONS = [
 
     // Fond semi-transparent derrière le titre (pour lisibilité)
     overlayColor: "rgba(0,0,0,0.45)",
-    accentColor: "#ff6600",
   },
 
   {
@@ -48,7 +47,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.40)",
-    accentColor: "#c41e1e",
   },
 
   {
@@ -67,7 +65,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.40)",
-    accentColor: "#8B008B",
   },
 
   {
@@ -86,7 +83,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.35)",
-    accentColor: "#ff1493",
   },
 
   {
@@ -105,7 +101,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.30)",
-    accentColor: "#FF69B4",
   },
 
   {
@@ -124,7 +119,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.25)",
-    accentColor: "#FF8C00",
   },
 
   {
@@ -143,7 +137,6 @@ export const SEASONS = [
     buttonColor:  "#fff",
 
     overlayColor: "rgba(0,0,0,0.35)",
-    accentColor: "#D2691E",
   },
 ];
 
@@ -152,23 +145,52 @@ export const SEASONS = [
 // ─────────────────────────────────────────────────────────────
 export const DEFAULT_SEASON = {
   name: "default",
-  backgroundImage: null,  // pas d'image → dégradé CSS classique
+  backgroundImage: null,
   emoji:   "🪞",
   tagline: "REPRODUIS LE PIXEL ART",
-
   titleColor:   "#357ABD",
   taglineColor: "#7a9abb",
   buttonBg:     "linear-gradient(135deg, #4A90D9, #357ABD)",
   buttonShadow: "#2563a0",
   buttonColor:  "#fff",
-
   overlayColor: "transparent",
-  accentColor: "#4A90D9",
 };
 
 // ─────────────────────────────────────────────────────────────
-// Fonction utilitaire : retourne la saison active
+// EVENTS — Événements avec niveaux spéciaux
+//
+// Pour ajouter un événement :
+//   1. Ajoute une entrée ici avec l'eventId, les dates et les infos
+//   2. Dans levels.js, ajoute les niveaux avec type:"event" et eventId correspondant
+//   3. Les dates ici font foi — pas besoin de les répéter dans levels.js
+//
+// Dates au format "YYYY-MM-DD"
 // ─────────────────────────────────────────────────────────────
+export const EVENTS = {
+  event001: {
+    eventId:    "event001",
+    eventName:  "Halloween 2026",
+    eventStart: "2026-10-15",
+    eventEnd:   "2026-11-01",
+    emoji:      "🎃",
+    rewardImg:  null, // "/rewards/halloween.png" quand tu auras l'image
+  },
+  event002: {
+    eventId:    "event002",
+    eventName:  "Noël 2026",
+    eventStart: "2026-12-01",
+    eventEnd:   "2026-12-31",
+    emoji:      "🎄",
+    rewardImg:  null,
+  },
+  // Ajoute tes prochains événements ici...
+};
+
+// ─────────────────────────────────────────────────────────────
+// Utilitaires
+// ─────────────────────────────────────────────────────────────
+
+// Retourne la saison active
 export function getActiveSeason() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -177,8 +199,6 @@ export function getActiveSeason() {
 
   for (const season of SEASONS) {
     const { dateStart, dateEnd } = season;
-
-    // Cas chevauchant l'année (ex: 12-31 → 01-02)
     if (dateStart > dateEnd) {
       if (today >= dateStart || today <= dateEnd) return season;
     } else {
@@ -187,4 +207,25 @@ export function getActiveSeason() {
   }
 
   return DEFAULT_SEASON;
+}
+
+// Retourne les infos d'un événement par son eventId
+export function getEvent(eventId) {
+  return EVENTS[eventId] || null;
+}
+
+// Vérifie si un événement est actif aujourd'hui
+export function isEventActive(eventId) {
+  const event = EVENTS[eventId];
+  if (!event) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  return today >= event.eventStart && today <= event.eventEnd;
+}
+
+// Vérifie si un événement est terminé
+export function isEventOver(eventId) {
+  const event = EVENTS[eventId];
+  if (!event) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  return today > event.eventEnd;
 }
