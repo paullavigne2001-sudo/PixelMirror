@@ -12,7 +12,7 @@
 export const SEASONS = [
   {
     name: "Halloween",
-    dateStart: "10-15",
+    dateStart: "08-14",
     dateEnd:   "11-01",
     backgroundImage: "/seasons/halloween.png",
 
