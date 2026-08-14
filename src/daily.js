@@ -139,18 +139,10 @@ export function completeDailyChallenge(dateStr, levelId, stars) {
   const today = todayKey();
   const currentMk = monthKey();
 
-  let daysToComplete;
-  if (mk === currentMk) {
-    // Mois en cours : seulement les jours passés + aujourd'hui
-    daysToComplete = new Date().getDate();
-  } else {
-    // Mois passé : tous les jours
-    daysToComplete = total;
-  }
-
-  const isNewMonthReward =
-    !monthly[mk].rewardUnlocked &&
-    monthly[mk].daysCompleted.length >= daysToComplete;
+// La coupe se débloque uniquement quand TOUS les jours du mois sont complétés
+const isNewMonthReward =
+  !monthly[mk].rewardUnlocked &&
+  monthly[mk].daysCompleted.length >= total;
 
   if (isNewMonthReward) monthly[mk].rewardUnlocked = true;
   writeMonthly(monthly);
