@@ -212,9 +212,6 @@ export const LEVELS = [
     emoji: "🎃",
     type: "event",
     eventId: "event001",
-    eventName: "Halloween 2026",
-    eventStart: "2026-10-15",
-    eventEnd: "2026-11-01",
     cols: 30, rows: 30,
     palette: ["#e8e8e8", "#3c342a", "#d47325", "#eeff00"],
     grid: (() => {
