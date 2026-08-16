@@ -11,7 +11,6 @@ function Particle({ x, emoji, delay, duration, size, rotation }) {
       animation: `floatDown ${duration}s ease-in ${delay}s both`,
       pointerEvents: "none",
       zIndex: 0,
-      transform: `rotate(${rotation}deg)`,
     }}>
       {emoji}
     </div>
@@ -30,7 +29,7 @@ function AnimatedStar({ active, index, visible }) {
         ? `transform 0.6s cubic-bezier(0.34,2.0,0.64,1) ${0.25 + index * 0.2}s, opacity 0.3s ${0.25 + index * 0.2}s`
         : "none",
       textShadow: active && visible
-        ? "0 0 16px rgba(255,215,0,0.9), 0 0 32px rgba(255,165,0,0.6), 0 0 60px rgba(255,200,0,0.3)"
+        ? "0 0 16px rgba(255,215,0,0.9), 0 0 32px rgba(255,165,0,0.6)"
         : "none",
     }}>
       ⭐
@@ -61,7 +60,6 @@ const ResultOverlay = memo(function ResultOverlay({
   useEffect(() => {
     if (!visible) return;
     sounds.done();
-
     const emojis = EMOJIS_BY_STARS[stars] || ["✨"];
     const count = stars === 3 ? 22 : stars === 2 ? 12 : 6;
     const newParticles = Array.from({ length: count }).map((_, i) => ({
@@ -74,7 +72,6 @@ const ResultOverlay = memo(function ResultOverlay({
       rotation: Math.random() * 360,
     }));
     setParticles(newParticles);
-
     if (stars > 0) setTimeout(sounds.star, 500);
     if (stars === 3) setTimeout(sounds.star, 900);
     if (isNewMonthReward) setTimeout(() => setShowTrophy(true), 900);
@@ -82,11 +79,11 @@ const ResultOverlay = memo(function ResultOverlay({
 
   const msgs = ["Essaie encore ! 💪", "Bien joué ! 👍", "Bien joué ! 👍", "PARFAIT ! 🎉"];
 
-  // Couleurs selon étoiles
-  const glowColor  = stars === 3 ? "rgba(255,200,0,0.22)" : stars === 2 ? "rgba(100,180,255,0.18)" : "rgba(180,180,180,0.12)";
-  const glowBorder = stars === 3 ? "rgba(255,200,0,0.4)"  : stars === 2 ? "rgba(100,180,255,0.35)" : "rgba(180,180,180,0.2)";
-  const rayColor1  = stars === 3 ? "rgba(255,215,0,0.12)" : stars === 2 ? "rgba(74,144,217,0.10)"  : "rgba(200,200,200,0.08)";
-  const rayColor2  = stars === 3 ? "rgba(255,140,0,0.08)" : stars === 2 ? "rgba(135,206,235,0.07)" : "rgba(150,150,150,0.05)";
+  const rayColor1 = stars === 3 ? "rgba(255,215,0,0.18)" : stars === 2 ? "rgba(74,144,217,0.14)" : "rgba(200,200,200,0.08)";
+  const rayColor2 = stars === 3 ? "rgba(255,140,0,0.10)" : stars === 2 ? "rgba(135,206,235,0.08)" : "rgba(150,150,150,0.04)";
+  const glowColor = stars === 3 ? "rgba(255,200,0,0.20)" : stars === 2 ? "rgba(100,180,255,0.16)" : "rgba(180,180,180,0.10)";
+  const glowBorder = stars === 3 ? "rgba(255,200,0,0.4)" : stars === 2 ? "rgba(100,180,255,0.35)" : "rgba(180,180,180,0.2)";
+  const raySpeed = stars === 3 ? "8s" : "14s";
 
   return (
     <>
@@ -96,6 +93,10 @@ const ResultOverlay = memo(function ResultOverlay({
           70%  { opacity: 0.9; }
           100% { transform: translateY(110vh) rotate(180deg) scale(0.5); opacity: 0; }
         }
+        @keyframes rayRotate {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
         @keyframes pulseGlow {
           0%, 100% { box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 2px ${glowBorder}, 0 0 40px ${glowColor}; }
           50%       { box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 2px ${glowBorder}, 0 0 80px ${glowColor}; }
@@ -104,12 +105,8 @@ const ResultOverlay = memo(function ResultOverlay({
           0%   { background-position: -200% center; }
           100% { background-position: 200% center; }
         }
-        @keyframes rayRotate {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
-        @keyframes bgPulse {
-          0%, 100% { opacity: 0.7; }
+        @keyframes haloFade {
+          0%, 100% { opacity: 0.6; }
           50%       { opacity: 1; }
         }
       `}</style>
@@ -121,59 +118,20 @@ const ResultOverlay = memo(function ResultOverlay({
         fontFamily: "'Press Start 2P', monospace",
       }}>
 
-        {/* FOND RAYONNANT — couche 1 : blur + couleur */}
+        {/* FOND SOMBRE FLOUTÉ */}
         <div style={{
           position: "absolute", inset: 0,
-          background: "rgba(0,0,0,0.55)",
+          background: "rgba(0,0,0,0.60)",
           backdropFilter: "blur(4px)",
           zIndex: 0,
         }} />
 
-        {/* FOND RAYONNANT — couche 2 : rayons qui tournent */}
-        {visible && stars >= 2 && (
-          <div style={{
-            position: "absolute",
-            width: "200vmax", height: "200vmax",
-            top: "50%", left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: `conic-gradient(
-              ${rayColor1} 0deg, transparent 20deg,
-              ${rayColor2} 40deg, transparent 60deg,
-              ${rayColor1} 80deg, transparent 100deg,
-              ${rayColor2} 120deg, transparent 140deg,
-              ${rayColor1} 160deg, transparent 180deg,
-              ${rayColor2} 200deg, transparent 220deg,
-              ${rayColor1} 240deg, transparent 260deg,
-              ${rayColor2} 280deg, transparent 300deg,
-              ${rayColor1} 320deg, transparent 340deg,
-              ${rayColor2} 360deg
-            )`,
-            animation: `rayRotate ${stars === 3 ? "8s" : "14s"} linear infinite, bgPulse 3s ease-in-out infinite`,
-            zIndex: 1,
-            pointerEvents: "none",
-          }} />
-        )}
-
-        {/* FOND RAYONNANT — couche 3 : halo central radial */}
-        {visible && (
-          <div style={{
-            position: "absolute",
-            width: "80vmax", height: "80vmax",
-            top: "50%", left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: `radial-gradient(ellipse at center, ${glowColor} 0%, transparent 65%)`,
-            animation: "bgPulse 2s ease-in-out infinite",
-            zIndex: 2,
-            pointerEvents: "none",
-          }} />
-        )}
-
-        {/* PARTICULES qui tombent */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none", overflow: "hidden" }}>
+        {/* PARTICULES */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
           {particles.map(p => <Particle key={p.id} {...p} />)}
         </div>
 
-        {/* CARTE RÉSULTAT */}
+        {/* CARTE — les rayons sont à l'intérieur de la carte, centrés sur elle */}
         <div style={{
           position: "relative",
           background: "#fff",
@@ -181,7 +139,8 @@ const ResultOverlay = memo(function ResultOverlay({
           padding: "32px 28px",
           textAlign: "center",
           minWidth: 270, maxWidth: 320, width: "90%",
-          zIndex: 4,
+          zIndex: 2,
+          overflow: "hidden", // ← les rayons ne débordent pas
           transform: visible ? "scale(1)" : "scale(0.4)",
           opacity: visible ? 1 : 0,
           transition: visible
@@ -190,16 +149,47 @@ const ResultOverlay = memo(function ResultOverlay({
           animation: visible ? "pulseGlow 2.5s ease-in-out infinite" : "none",
         }}>
 
-          {/* Halo interne sur la carte */}
+          {/* RAYONS qui tournent — centrés sur la carte */}
+          {visible && stars >= 1 && (
+            <div style={{
+              position: "absolute",
+              width: "300%",
+              height: "300%",
+              top: "50%",
+              left: "50%",
+              animation: `rayRotate ${raySpeed} linear infinite`,
+              zIndex: 0,
+              pointerEvents: "none",
+              background: `conic-gradient(
+                ${rayColor1} 0deg,   transparent 15deg,
+                ${rayColor2} 30deg,  transparent 45deg,
+                ${rayColor1} 60deg,  transparent 75deg,
+                ${rayColor2} 90deg,  transparent 105deg,
+                ${rayColor1} 120deg, transparent 135deg,
+                ${rayColor2} 150deg, transparent 165deg,
+                ${rayColor1} 180deg, transparent 195deg,
+                ${rayColor2} 210deg, transparent 225deg,
+                ${rayColor1} 240deg, transparent 255deg,
+                ${rayColor2} 270deg, transparent 285deg,
+                ${rayColor1} 300deg, transparent 315deg,
+                ${rayColor2} 330deg, transparent 345deg,
+                ${rayColor1} 360deg
+              )`,
+            }} />
+          )}
+
+          {/* HALO RADIAL central par-dessus les rayons */}
           <div style={{
-            position: "absolute", inset: 0, borderRadius: 24,
-            background: `radial-gradient(ellipse at 50% 20%, ${glowColor} 0%, transparent 65%)`,
+            position: "absolute", inset: 0,
+            background: `radial-gradient(ellipse at 50% 50%, ${glowColor} 0%, rgba(255,255,255,0.95) 55%)`,
+            zIndex: 1,
             pointerEvents: "none",
+            animation: "haloFade 2.5s ease-in-out infinite",
           }} />
 
-          <div style={{ position: "relative", zIndex: 1 }}>
+          {/* CONTENU par-dessus tout */}
+          <div style={{ position: "relative", zIndex: 2 }}>
 
-            {/* Badge défi du jour */}
             {isDaily && (
               <div style={{
                 background: "linear-gradient(135deg, #4A90D9, #357ABD)",
@@ -212,7 +202,6 @@ const ResultOverlay = memo(function ResultOverlay({
               NIVEAU TERMINÉ !
             </div>
 
-            {/* Titre shimmer si 3 étoiles */}
             <div style={{
               fontSize: 11, marginBottom: 22, color: "#222",
               ...(stars === 3 && visible ? {
@@ -226,18 +215,14 @@ const ResultOverlay = memo(function ResultOverlay({
               {levelName}
             </div>
 
-            {/* ÉTOILES */}
             <div style={{ display: "flex", justifyContent: "center", gap: 10, marginBottom: 16 }}>
               {[0, 1, 2].map(i => (
                 <AnimatedStar key={i} active={i < stars} index={i} visible={visible} />
               ))}
             </div>
 
-            <div style={{ fontSize: 8, color: "#888", marginBottom: 20 }}>
-              {msgs[stars]}
-            </div>
+            <div style={{ fontSize: 8, color: "#888", marginBottom: 20 }}>{msgs[stars]}</div>
 
-            {/* Coupe du mois */}
             {isNewMonthReward && (
               <div style={{
                 background: "linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.08))",
@@ -257,7 +242,6 @@ const ResultOverlay = memo(function ResultOverlay({
               </div>
             )}
 
-            {/* BOUTONS */}
             <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
               <button onClick={() => { sounds.next(); onRetry(); }} style={{
                 background: "#f0f0f0", border: "none", borderRadius: 12,
