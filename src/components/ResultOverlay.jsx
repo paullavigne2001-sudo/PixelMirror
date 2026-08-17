@@ -1,7 +1,7 @@
 import { memo, useState, useEffect } from "react";
 import { sounds } from "../sounds";
 
-function Particle({ x, emoji, delay, duration, size, rotation }) {
+function Particle({ x, emoji, delay, duration, size }) {
   return (
     <div style={{
       position: "absolute",
@@ -10,7 +10,6 @@ function Particle({ x, emoji, delay, duration, size, rotation }) {
       fontSize: size,
       animation: `floatDown ${duration}s ease-in ${delay}s both`,
       pointerEvents: "none",
-      zIndex: 0,
     }}>
       {emoji}
     </div>
@@ -53,25 +52,21 @@ const ResultOverlay = memo(function ResultOverlay({
     3: ["🌟", "✨", "⭐", "💛", "🎉", "🌠", "⚡"],
   };
 
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 60);
-  }, []);
+  useEffect(() => { setTimeout(() => setVisible(true), 60); }, []);
 
   useEffect(() => {
     if (!visible) return;
     sounds.done();
     const emojis = EMOJIS_BY_STARS[stars] || ["✨"];
     const count = stars === 3 ? 22 : stars === 2 ? 12 : 6;
-    const newParticles = Array.from({ length: count }).map((_, i) => ({
+    setParticles(Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * 105 - 2,
       emoji: emojis[i % emojis.length],
       delay: Math.random() * 1.8,
       duration: 2.5 + Math.random() * 2,
       size: `${13 + Math.random() * 12}px`,
-      rotation: Math.random() * 360,
-    }));
-    setParticles(newParticles);
+    })));
     if (stars > 0) setTimeout(sounds.star, 500);
     if (stars === 3) setTimeout(sounds.star, 900);
     if (isNewMonthReward) setTimeout(() => setShowTrophy(true), 900);
@@ -79,11 +74,12 @@ const ResultOverlay = memo(function ResultOverlay({
 
   const msgs = ["Essaie encore ! 💪", "Bien joué ! 👍", "Bien joué ! 👍", "PARFAIT ! 🎉"];
 
-  const rayColor1 = stars === 3 ? "rgba(255,215,0,0.18)" : stars === 2 ? "rgba(74,144,217,0.14)" : "rgba(200,200,200,0.08)";
-  const rayColor2 = stars === 3 ? "rgba(255,140,0,0.10)" : stars === 2 ? "rgba(135,206,235,0.08)" : "rgba(150,150,150,0.04)";
-  const glowColor = stars === 3 ? "rgba(255,200,0,0.20)" : stars === 2 ? "rgba(100,180,255,0.16)" : "rgba(180,180,180,0.10)";
-  const glowBorder = stars === 3 ? "rgba(255,200,0,0.4)" : stars === 2 ? "rgba(100,180,255,0.35)" : "rgba(180,180,180,0.2)";
-  const raySpeed = stars === 3 ? "8s" : "14s";
+  // Couleurs selon étoiles
+  const rayColor1  = stars === 3 ? "rgba(255,215,0,0.22)"  : stars === 2 ? "rgba(74,144,217,0.18)"   : "rgba(200,200,200,0.10)";
+  const rayColor2  = stars === 3 ? "rgba(255,140,0,0.12)"  : stars === 2 ? "rgba(135,206,235,0.10)"  : "rgba(150,150,150,0.05)";
+  const glowColor  = stars === 3 ? "rgba(255,200,0,0.22)"  : stars === 2 ? "rgba(100,180,255,0.18)"  : "rgba(180,180,180,0.10)";
+  const glowBorder = stars === 3 ? "rgba(255,200,0,0.45)"  : stars === 2 ? "rgba(100,180,255,0.35)"  : "rgba(180,180,180,0.2)";
+  const raySpeed   = stars === 3 ? "7s" : "13s";
 
   return (
     <>
@@ -91,104 +87,103 @@ const ResultOverlay = memo(function ResultOverlay({
         @keyframes floatDown {
           0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
           70%  { opacity: 0.9; }
-          100% { transform: translateY(110vh) rotate(180deg) scale(0.5); opacity: 0; }
+          100% { transform: translateY(110vh) rotate(200deg) scale(0.5); opacity: 0; }
         }
         @keyframes rayRotate {
           from { transform: translate(-50%, -50%) rotate(0deg); }
           to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
-        @keyframes pulseGlow {
-          0%, 100% { box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 2px ${glowBorder}, 0 0 40px ${glowColor}; }
-          50%       { box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 2px ${glowBorder}, 0 0 80px ${glowColor}; }
+        @keyframes cardGlow {
+          0%, 100% { box-shadow: 0 8px 40px rgba(0,0,0,0.35), 0 0 0 2px ${glowBorder}, 0 0 50px ${glowColor}; }
+          50%       { box-shadow: 0 8px 40px rgba(0,0,0,0.35), 0 0 0 2px ${glowBorder}, 0 0 100px ${glowColor}; }
         }
         @keyframes shimmer {
           0%   { background-position: -200% center; }
           100% { background-position: 200% center; }
         }
-        @keyframes haloFade {
-          0%, 100% { opacity: 0.6; }
-          50%       { opacity: 1; }
+        @keyframes haloBreath {
+          0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+          50%       { opacity: 0.9; transform: translate(-50%, -50%) scale(1.08); }
         }
       `}</style>
 
+      {/* FOND PLEIN ÉCRAN */}
       <div style={{
         position: "fixed", inset: 0, zIndex: 60,
+        background: "rgba(10,10,20,0.82)",
+        backdropFilter: "blur(5px)",
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden",
         fontFamily: "'Press Start 2P', monospace",
       }}>
 
-        {/* FOND SOMBRE FLOUTÉ */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "rgba(0,0,0,0.60)",
-          backdropFilter: "blur(4px)",
-          zIndex: 0,
-        }} />
+        {/* PARTICULES qui tombent */}
+        {particles.map(p => <Particle key={p.id} {...p} />)}
 
-        {/* PARTICULES */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
-          {particles.map(p => <Particle key={p.id} {...p} />)}
-        </div>
+        {/* WRAPPER centré — sert d'ancre pour les rayons */}
+        <div style={{ position: "relative", zIndex: 2 }}>
 
-        {/* CARTE — les rayons sont à l'intérieur de la carte, centrés sur elle */}
-        <div style={{
-          position: "relative",
-          background: "#fff",
-          borderRadius: 24,
-          padding: "32px 28px",
-          textAlign: "center",
-          minWidth: 270, maxWidth: 320, width: "90%",
-          zIndex: 2,
-          overflow: "hidden", // ← les rayons ne débordent pas
-          transform: visible ? "scale(1)" : "scale(0.4)",
-          opacity: visible ? 1 : 0,
-          transition: visible
-            ? "transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s"
-            : "none",
-          animation: visible ? "pulseGlow 2.5s ease-in-out infinite" : "none",
-        }}>
-
-          {/* RAYONS qui tournent — centrés sur la carte */}
-          {visible && stars >= 1 && (
+          {/* RAYONS — positionnés par rapport au centre du wrapper */}
+          {visible && (
             <div style={{
               position: "absolute",
-              width: "300%",
-              height: "300%",
               top: "50%",
               left: "50%",
+              width: "220vmax",
+              height: "220vmax",
               animation: `rayRotate ${raySpeed} linear infinite`,
               zIndex: 0,
               pointerEvents: "none",
               background: `conic-gradient(
-                ${rayColor1} 0deg,   transparent 15deg,
-                ${rayColor2} 30deg,  transparent 45deg,
-                ${rayColor1} 60deg,  transparent 75deg,
-                ${rayColor2} 90deg,  transparent 105deg,
-                ${rayColor1} 120deg, transparent 135deg,
-                ${rayColor2} 150deg, transparent 165deg,
-                ${rayColor1} 180deg, transparent 195deg,
-                ${rayColor2} 210deg, transparent 225deg,
-                ${rayColor1} 240deg, transparent 255deg,
-                ${rayColor2} 270deg, transparent 285deg,
-                ${rayColor1} 300deg, transparent 315deg,
-                ${rayColor2} 330deg, transparent 345deg,
-                ${rayColor1} 360deg
+                ${rayColor1} 0deg,   transparent 12deg,
+                ${rayColor2} 25deg,  transparent 37deg,
+                ${rayColor1} 50deg,  transparent 62deg,
+                ${rayColor2} 75deg,  transparent 87deg,
+                ${rayColor1} 100deg, transparent 112deg,
+                ${rayColor2} 125deg, transparent 137deg,
+                ${rayColor1} 150deg, transparent 162deg,
+                ${rayColor2} 175deg, transparent 187deg,
+                ${rayColor1} 200deg, transparent 212deg,
+                ${rayColor2} 225deg, transparent 237deg,
+                ${rayColor1} 250deg, transparent 262deg,
+                ${rayColor2} 275deg, transparent 287deg,
+                ${rayColor1} 300deg, transparent 312deg,
+                ${rayColor2} 325deg, transparent 337deg,
+                ${rayColor1} 350deg, transparent 360deg
               )`,
             }} />
           )}
 
-          {/* HALO RADIAL central par-dessus les rayons */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: `radial-gradient(ellipse at 50% 50%, ${glowColor} 0%, rgba(255,255,255,0.95) 55%)`,
-            zIndex: 1,
-            pointerEvents: "none",
-            animation: "haloFade 2.5s ease-in-out infinite",
-          }} />
+          {/* HALO RADIAL doux au centre — par-dessus les rayons, devant le fond */}
+          {visible && (
+            <div style={{
+              position: "absolute",
+              top: "50%", left: "50%",
+              width: "90vmax", height: "90vmax",
+              borderRadius: "50%",
+              background: `radial-gradient(ellipse at center, ${glowColor} 0%, transparent 65%)`,
+              animation: "haloBreath 3s ease-in-out infinite",
+              zIndex: 1,
+              pointerEvents: "none",
+            }} />
+          )}
 
-          {/* CONTENU par-dessus tout */}
-          <div style={{ position: "relative", zIndex: 2 }}>
+          {/* CARTE — par-dessus les rayons */}
+          <div style={{
+            position: "relative",
+            background: "#fff",
+            borderRadius: 24,
+            padding: "32px 28px",
+            textAlign: "center",
+            minWidth: 270, maxWidth: 320, width: "90vw",
+            zIndex: 2,
+            transform: visible ? "scale(1)" : "scale(0.4)",
+            opacity: visible ? 1 : 0,
+            transition: visible
+              ? "transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s"
+              : "none",
+            animation: visible ? "cardGlow 2.5s ease-in-out infinite" : "none",
+          }}>
 
             {isDaily && (
               <div style={{
