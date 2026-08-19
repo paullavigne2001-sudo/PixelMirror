@@ -3,9 +3,10 @@ import { LEVELS } from "./levels";
 import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
 import { getActiveSeason } from "./seasons";
+import { hapticDone, hapticStars, hapticButton } from "./settings";
 import {
   getLevelForDate, getTodayEntry, completeDailyChallenge,
-  getCurrentMonthData, todayKey, formatDate,
+  getCurrentMonthData, todayKey,
 } from "./daily";
 import GridCell from "./components/GridCell";
 import AdScreen from "./components/AdScreen";
@@ -14,19 +15,7 @@ import CompareAnimation from "./components/CompareAnimation";
 import CatalogueScreen from "./components/CatalogueScreen";
 import RewardsScreen from "./components/RewardsScreen";
 import DailyCalendarScreen from "./components/DailyCalendarScreen";
-
-// ─────────────────────────────────────────────
-// HAPTIQUE
-// ─────────────────────────────────────────────
-function hapticDone() { try { navigator.vibrate([40, 30, 40]); } catch {} }
-function hapticStars(count) {
-  try {
-    if (count === 3) navigator.vibrate([30, 20, 30, 20, 30]);
-    else if (count === 2) navigator.vibrate([30, 20, 30]);
-    else navigator.vibrate(60);
-  } catch {}
-}
-function hapticButton() { try { navigator.vibrate(18); } catch {} }
+import SettingsPanel from "./components/SettingsPanel";
 
 // ─────────────────────────────────────────────
 // FOND DYNAMIQUE
@@ -52,7 +41,33 @@ function computeGameBackground(palette, season) {
 }
 
 // ─────────────────────────────────────────────
-// STYLE BOUTON COMMUN (transparent)
+// BOUTON PARAMÈTRES FLOTTANT
+// Visible sur tous les écrans
+// ─────────────────────────────────────────────
+function FloatingSettingsButton({ onOpen }) {
+  return (
+    <button
+      onClick={onOpen}
+      style={{
+        position: "fixed",
+        top: 14, right: 14,
+        zIndex: 70,
+        background: "rgba(0,0,0,0.35)",
+        border: "1px solid rgba(255,255,255,0.2)",
+        borderRadius: "50%",
+        width: 40, height: 40,
+        fontSize: 18,
+        cursor: "pointer",
+        backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+      }}
+    >⚙️</button>
+  );
+}
+
+// ─────────────────────────────────────────────
+// STYLE BOUTON COMMUN
 // ─────────────────────────────────────────────
 const btnStyle = {
   background: "rgba(0,0,0,0.55)",
@@ -69,7 +84,7 @@ const btnStyle = {
 // ─────────────────────────────────────────────
 // ÉCRAN D'ACCUEIL
 // ─────────────────────────────────────────────
-function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
+function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
   const season = getActiveSeason();
   const hasImage = !!season.backgroundImage;
   const monthData = getCurrentMonthData();
@@ -83,7 +98,6 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
       overflow: "hidden",
       background: hasImage ? "#000" : "linear-gradient(160deg, #c3dcf5 0%, #ddeeff 100%)",
     }}>
-
       {hasImage && (
         <img src={season.backgroundImage} alt="" style={{
           position: "absolute", inset: 0, width: "100%", height: "100%",
@@ -100,7 +114,6 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
         display: "flex", flexDirection: "column", alignItems: "center",
         gap: 14, padding: "0 24px", width: "100%", maxWidth: 360,
       }}>
-
         {/* TITRE */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 12 }}>
           <div style={{
@@ -119,6 +132,16 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
           ...btnStyle, padding: "16px 48px", fontSize: 12,
         }}>▶ JOUER</button>
 
+        {/* CATALOGUE */}
+        <button onClick={() => { hapticButton(); onCatalogue(); }} style={{
+          ...btnStyle, padding: "12px 20px", fontSize: 8,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 18 }}>📖</span>
+            <div>CATALOGUE</div>
+          </div>
+        </button>
+
         {/* DÉFIS DU MOIS */}
         <button onClick={() => { hapticButton(); onDailyCalendar(); }} style={{
           ...btnStyle, padding: "14px 20px", fontSize: 8,
@@ -128,9 +151,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
             <div style={{ textAlign: "left", flex: 1 }}>
               <div>DÉFIS DU MOIS</div>
               {monthData.rewardUnlocked && (
-                <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>
-                  🏆 COUPE OBTENUE !
-                </div>
+                <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>🏆 COUPE OBTENUE !</div>
               )}
             </div>
           </div>
@@ -141,7 +162,6 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards }) {
           ...btnStyle, padding: "12px 20px", fontSize: 8, color: "#FFD700",
           border: "2px solid rgba(255,215,0,0.3)",
         }}>🏆 MES RÉCOMPENSES</button>
-
       </div>
     </div>
   );
@@ -278,9 +298,7 @@ function GameScreen({ onHome, dailyDate = null }) {
         </div>
         <div style={{ fontSize: 10, fontWeight: "bold", textAlign: "center" }}>
           {isDaily && (
-            <div style={{ fontSize: 6, color: "#4A90D9", marginBottom: 4, letterSpacing: 1 }}>
-              📅 {dailyDate}
-            </div>
+            <div style={{ fontSize: 6, color: "#4A90D9", marginBottom: 4, letterSpacing: 1 }}>📅 {dailyDate}</div>
           )}
           {level.name}
           <div style={{ fontSize: 7, color: "#7a9abb", marginTop: 4 }}>{COLS}×{ROWS}</div>
@@ -386,15 +404,23 @@ function GameScreen({ onHome, dailyDate = null }) {
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [dailyDate, setDailyDate] = useState(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showCatalogueHome, setShowCatalogueHome] = useState(false);
+  const [catalogue, setCatalogue] = usePersistedState("pag_catalogue", {});
 
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+      {/* BOUTON PARAMÈTRES FLOTTANT — toujours visible */}
+      <FloatingSettingsButton onOpen={() => { hapticButton(); setShowSettings(true); }} />
+
       {screen === "home" && (
         <HomeScreen
           onPlay={() => setScreen("game")}
           onDailyCalendar={() => setScreen("calendar")}
           onRewards={() => setScreen("rewards")}
+          onCatalogue={() => setShowCatalogueHome(true)}
         />
       )}
       {screen === "game" && (
@@ -411,6 +437,23 @@ export default function App() {
       )}
       {screen === "rewards" && (
         <RewardsScreen onClose={() => setScreen("home")} trophyImg="/rewards/trophy.png" />
+      )}
+
+      {/* CATALOGUE depuis l'accueil */}
+      {showCatalogueHome && (
+        <CatalogueScreen
+          catalogue={catalogue}
+          onClose={() => setShowCatalogueHome(false)}
+          onPlay={id => {
+            setShowCatalogueHome(false);
+            setScreen("game");
+          }}
+        />
+      )}
+
+      {/* PANNEAU PARAMÈTRES */}
+      {showSettings && (
+        <SettingsPanel onClose={() => setShowSettings(false)} />
       )}
     </>
   );
