@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────────
+// SOUNDS.JS — Sons rétro avec Web Audio API
+// Vérifie les préférences avant de jouer
+// ─────────────────────────────────────────────────────────────
+
+import { getSetting } from "./settings";
+
 let audioCtx = null;
 
 function getAudioCtx() {
@@ -22,22 +29,35 @@ function playTone(freq, type = "sine", duration = 0.12, vol = 0.06) {
 }
 
 export const sounds = {
-  // Doux "plop" quand on peint
-  paint: () => playTone(320, "sine", 0.08, 0.04),
+  // ── Sons du JEU (soundGame) ──────────────────
+  paint: () => {
+    if (!getSetting("soundGame")) return;
+    playTone(320, "sine", 0.08, 0.04);
+  },
 
-  // Mélodie douce ascendante pour DONE
+  next: () => {
+    if (!getSetting("soundGame")) return;
+    playTone(280, "sine", 0.1, 0.05);
+  },
+
   done: () => {
+    if (!getSetting("soundGame")) return;
     playTone(440, "sine", 0.15, 0.06);
     setTimeout(() => playTone(550, "sine", 0.15, 0.06), 150);
     setTimeout(() => playTone(660, "sine", 0.2, 0.07), 300);
   },
 
-  // Petite note cristalline pour les étoiles
+  // ── Sons ANIMATION (soundAnim) ───────────────
   star: () => {
+    if (!getSetting("soundAnim")) return;
     playTone(780, "sine", 0.2, 0.06);
     setTimeout(() => playTone(980, "sine", 0.25, 0.05), 120);
   },
 
-  // Clic doux pour les boutons
-  next: () => playTone(280, "sine", 0.1, 0.05),
+  victory: () => {
+    if (!getSetting("soundAnim")) return;
+    [523, 659, 784, 1047].forEach((freq, i) => {
+      setTimeout(() => playTone(freq, "sine", 0.25, 0.08), i * 120);
+    });
+  },
 };
