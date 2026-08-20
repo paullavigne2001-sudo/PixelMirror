@@ -1,5 +1,11 @@
 import { memo, useState } from "react";
 import { readSettings, setSetting } from "../settings";
+import { useTranslation } from "../i18n";
+
+const LANGUAGES = [
+  { code: "fr", label: "🇫🇷 Français" },
+  { code: "en", label: "🇬🇧 English" },
+];
 
 const Toggle = ({ value, onChange, label, sublabel }) => (
   <div style={{
@@ -37,6 +43,7 @@ const Toggle = ({ value, onChange, label, sublabel }) => (
 
 const SettingsPanel = memo(function SettingsPanel({ onClose }) {
   const [settings, setSettings] = useState(readSettings());
+  const t = useTranslation();
 
   const update = (key, value) => {
     setSetting(key, value);
@@ -65,63 +72,77 @@ const SettingsPanel = memo(function SettingsPanel({ onClose }) {
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           background: "rgba(0,0,0,0.3)",
         }}>
-          <div style={{ fontSize: 9, color: "#4A90D9", letterSpacing: 2 }}>⚙️ PARAMÈTRES</div>
+          <div style={{ fontSize: 9, color: "#4A90D9", letterSpacing: 2 }}>
+            {t("settings.title")}
+          </div>
           <button onClick={onClose} style={{
             background: "none", border: "none", fontSize: 20,
             cursor: "pointer", color: "#aaa",
           }}>✕</button>
         </div>
 
-        {/* OPTIONS */}
         <div style={{ padding: "4px 20px 20px" }}>
 
-          {/* Section sons */}
+          {/* SONS */}
           <div style={{ fontSize: 6, color: "#4A90D9", letterSpacing: 2, padding: "14px 0 4px" }}>
-            SONS
+            {t("settings.sounds")}
           </div>
-
           <Toggle
             value={settings.soundGame}
             onChange={v => update("soundGame", v)}
-            label="Sons du jeu"
-            sublabel="Pinceau · Boutons · DONE"
+            label={t("settings.sound_game")}
+            sublabel={t("settings.sound_game_sub")}
           />
           <Toggle
             value={settings.soundAnim}
             onChange={v => update("soundAnim", v)}
-            label="Sons animation"
-            sublabel="Victoire · Étoiles · Coupe"
+            label={t("settings.sound_anim")}
+            sublabel={t("settings.sound_anim_sub")}
           />
 
-          {/* Section haptique */}
+          {/* HAPTIQUE */}
           <div style={{ fontSize: 6, color: "#4A90D9", letterSpacing: 2, padding: "14px 0 4px" }}>
-            RETOUR HAPTIQUE
+            {t("settings.haptic")}
           </div>
-
           <Toggle
             value={settings.haptic}
             onChange={v => update("haptic", v)}
-            label="Vibrations"
-            sublabel="Retour tactile sur les actions"
+            label={t("settings.vibration")}
+            sublabel={t("settings.vibration_sub")}
           />
 
-          {/* Section langue */}
-          <div style={{ fontSize: 6, color: "#4A90D9", letterSpacing: 2, padding: "14px 0 4px" }}>
-            LANGUE
+          {/* LANGUE */}
+          <div style={{ fontSize: 6, color: "#4A90D9", letterSpacing: 2, padding: "14px 0 8px" }}>
+            {t("settings.language")}
           </div>
-
-          <div style={{
-            padding: "12px 0",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-          }}>
-            <div>
-              <div style={{ fontSize: 8, color: "#e0e8ff", marginBottom: 4 }}>Langue</div>
-              <div style={{ fontSize: 6, color: "#556" }}>Bientôt disponible</div>
-            </div>
-            <div style={{
-              fontSize: 7, color: "#556", background: "rgba(255,255,255,0.05)",
-              borderRadius: 8, padding: "6px 12px",
-            }}>🇫🇷 FR</div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {LANGUAGES.map(lang => (
+              <button
+                key={lang.code}
+                onClick={() => update("language", lang.code)}
+                style={{
+                  flex: 1,
+                  padding: "10px 8px",
+                  borderRadius: 10,
+                  border: settings.language === lang.code
+                    ? "2px solid #4A90D9"
+                    : "2px solid rgba(255,255,255,0.1)",
+                  background: settings.language === lang.code
+                    ? "rgba(74,144,217,0.2)"
+                    : "rgba(255,255,255,0.04)",
+                  color: settings.language === lang.code ? "#4A90D9" : "#888",
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: 7,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+              >
+                {lang.label}
+              </button>
+            ))}
+          </div>
+          <div style={{ fontSize: 5, color: "#334", marginTop: 8, textAlign: "center" }}>
+            ⚠️ Redémarre l'app pour appliquer
           </div>
 
         </div>
