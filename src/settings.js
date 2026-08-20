@@ -5,12 +5,11 @@
 const KEY = "pag_settings";
 
 const DEFAULTS = {
-  soundGame:  true,  // sons du jeu (pinceau, boutons, DONE)
-  soundAnim:  true,  // sons animation (victoire, étoiles, coupe)
-  haptic:     true,  // retour haptique
+  soundGame:  true,
+  soundAnim:  true,
+  haptic:     true,
+  language:   "fr",
 };
-
-// ── Lecture / écriture ────────────────────────
 
 export function readSettings() {
   try {
@@ -35,8 +34,6 @@ export function setSetting(key, value) {
   const current = readSettings();
   writeSettings({ ...current, [key]: value });
 }
-
-// ── Haptic — vérifie la préférence avant de vibrer ───────────
 
 export function hapticDone() {
   if (!getSetting("haptic")) return;
