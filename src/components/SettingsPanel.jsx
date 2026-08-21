@@ -48,6 +48,9 @@ const SettingsPanel = memo(function SettingsPanel({ onClose }) {
   const update = (key, value) => {
     setSetting(key, value);
     setSettings(s => ({ ...s, [key]: value }));
+    if (key === "language") {
+      setTimeout(() => window.location.reload(), 300);
+    }
   };
 
   return (
