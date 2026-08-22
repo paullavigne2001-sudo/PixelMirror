@@ -41,7 +41,7 @@ const Toggle = ({ value, onChange, label, sublabel }) => (
   </div>
 );
 
-const SettingsPanel = memo(function SettingsPanel({ onClose }) {
+const SettingsPanel = memo(function SettingsPanel({ onClose, currentScreen }) {
   const [settings, setSettings] = useState(readSettings());
   const t = useTranslation();
 
