@@ -405,7 +405,7 @@ function GameScreen({ onHome, dailyDate = null }) {
 // APP PRINCIPALE
 // ─────────────────────────────────────────────
 export default function App() {
-  const [screen, setScreen] = useState("home");
+  const [screen, setScreen] = useState(() => { const ret = localStorage.getItem("pag_return_screen"); if (ret) { localStorage.removeItem("pag_return_screen"); return ret; } return "home"; });
   const [dailyDate, setDailyDate] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showCatalogueHome, setShowCatalogueHome] = useState(false);
@@ -456,7 +456,7 @@ export default function App() {
 
       {/* PANNEAU PARAMÈTRES */}
       {showSettings && (
-        <SettingsPanel onClose={() => setShowSettings(false)} />
+        <SettingsPanel onClose={() => setShowSettings(false)} currentScreen={screen} />
       )}
     </>
   );
