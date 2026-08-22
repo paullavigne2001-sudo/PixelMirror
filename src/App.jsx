@@ -4,6 +4,7 @@ import { sounds } from "./sounds";
 import { useWindowWidth, usePersistedState } from "./hooks";
 import { getActiveSeason } from "./seasons";
 import { hapticDone, hapticStars, hapticButton } from "./settings";
+import { useTranslation } from "./i18n";
 import {
   getLevelForDate, getTodayEntry, completeDailyChallenge,
   getCurrentMonthData, todayKey,
@@ -88,6 +89,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
   const season = getActiveSeason();
   const hasImage = !!season.backgroundImage;
   const monthData = getCurrentMonthData();
+  const t = useTranslation();
 
   return (
     <div style={{
@@ -130,7 +132,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
         {/* JOUER */}
         <button onClick={() => { hapticButton(); onPlay(); }} style={{
           ...btnStyle, padding: "16px 48px", fontSize: 12,
-        }}>▶ JOUER</button>
+        }}>{t("home.play")}</button>
 
         {/* CATALOGUE */}
         <button onClick={() => { hapticButton(); onCatalogue(); }} style={{
@@ -149,9 +151,9 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 18 }}>📅</span>
             <div style={{ textAlign: "left", flex: 1 }}>
-              <div>DÉFIS DU MOIS</div>
+              <div>{t("home.daily")}</div>
               {monthData.rewardUnlocked && (
-                <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>🏆 COUPE OBTENUE !</div>
+                <div style={{ fontSize: 6, color: "#FFD700", marginTop: 5 }}>{t("home.cup_obtained")}</div>
               )}
             </div>
           </div>
@@ -161,7 +163,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
         <button onClick={() => { hapticButton(); onRewards(); }} style={{
           ...btnStyle, padding: "12px 20px", fontSize: 8, color: "#FFD700",
           border: "2px solid rgba(255,215,0,0.3)",
-        }}>🏆 MES RÉCOMPENSES</button>
+        }}>{t("home.rewards")}</button>
       </div>
     </div>
   );
@@ -172,6 +174,7 @@ function HomeScreen({ onPlay, onDailyCalendar, onRewards, onCatalogue }) {
 // ─────────────────────────────────────────────
 function GameScreen({ onHome, dailyDate = null }) {
   const isDaily = !!dailyDate;
+  const t = useTranslation();
   const [levelIdx, setLevelIdx] = usePersistedState("pag_levelIdx", 0);
   const level = isDaily
     ? getLevelForDate(dailyDate)
@@ -308,7 +311,7 @@ function GameScreen({ onHome, dailyDate = null }) {
 
       {/* MODEL */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 10 }}>
-        <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>MODÈLE</div>
+        <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>{t("game.model")}</div>
         <div style={modelGridStyle}>
           {level.grid.flat().map((c, i) => (
             <div key={i} style={{
@@ -322,7 +325,7 @@ function GameScreen({ onHome, dailyDate = null }) {
 
       {/* DRAWING GRID */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 14, padding: "0 16px" }}>
-        <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>TON DESSIN</div>
+        <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>{t("game.drawing")}</div>
         <div
           style={{
             display: "grid",
@@ -373,7 +376,7 @@ function GameScreen({ onHome, dailyDate = null }) {
         fontSize: 12, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
         boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
         letterSpacing: 1, marginBottom: 8,
-      }}>DONE ✓</button>
+      }}>{t("game.done_btn")}</button>
 
       {showCompare && (
         <CompareAnimation target={level.grid} userGrid={userGrid} cols={COLS} rows={ROWS} onDone={handleCompareFinished} />
