@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
 import { LEVELS } from "../levels";
 import { EVENTS, isEventActive, isEventOver } from "../seasons";
+import { useTranslation } from "../i18n";
 
 function groupByEvent(levels) {
   const groups = {};
@@ -41,6 +42,7 @@ function LevelThumb({ level }) {
 
 const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPlay }) {
   const [tab, setTab] = useState("standard");
+  const t = useTranslation();
   const standardLevels = LEVELS.filter(l => !l.type || l.type === "standard");
   const eventLevels    = LEVELS.filter(l => l.type === "event");
   const eventGroups    = groupByEvent(eventLevels);
@@ -68,13 +70,13 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "14px 20px", background: "#fff", borderBottom: "2px solid #e0e8f0",
         }}>
-          <span style={{ fontSize: 10 }}>📖 CATALOGUE</span>
+          <span style={{ fontSize: 10 }}>{t("catalogue.title")}</span>
           <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}>✕</button>
         </div>
 
         <div style={{ display: "flex", background: "#fff", borderBottom: "1px solid #e0e8f0" }}>
-          <button style={tabStyle(tab === "standard")} onClick={() => setTab("standard")}>STANDARDS</button>
-          <button style={tabStyle(tab === "event")} onClick={() => setTab("event")}>ÉVÉNEMENTS</button>
+          <button style={tabStyle(tab === "standard")} onClick={() => setTab("standard")}>{t("catalogue.standards")}</button>
+          <button style={tabStyle(tab === "event")} onClick={() => setTab("event")}>{t("catalogue.events")}</button>
         </div>
 
         <div style={{ overflowY: "auto", padding: 14, flex: 1 }}>
@@ -111,7 +113,7 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {eventGroups.length === 0 ? (
                 <div style={{ textAlign: "center", padding: "32px 0", fontSize: 7, color: "#aaa", lineHeight: 2 }}>
-                  Aucun événement<br/>disponible pour le moment
+                  {t("catalogue.no_event")}
                 </div>
               ) : eventGroups.map(group => {
                 const active   = isEventActive(group.eventId);
@@ -119,7 +121,7 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
                 const upcoming = !active && !over;
                 const completedCount = group.levels.filter(l => (catalogue[l.id] ?? -1) >= 0).length;
                 const allDone = completedCount === group.levels.length && group.levels.length > 0;
-                const statusLabel = active ? "EN COURS" : over ? "TERMINÉ" : "À VENIR";
+                const statusLabel = active ? t("catalogue.active") : over ? t("catalogue.over") : t("catalogue.upcoming");
                 const statusColor = active ? "#417505" : over ? "#888" : "#4A90D9";
                 const statusBg    = active ? "rgba(65,117,5,0.12)" : over ? "rgba(0,0,0,0.06)" : "rgba(74,144,217,0.12)";
 
@@ -149,7 +151,7 @@ const CatalogueScreen = memo(function CatalogueScreen({ catalogue, onClose, onPl
                           }} />
                         </div>
                         <div style={{ fontSize: 6, color: "#888" }}>
-                          {completedCount}/{group.levels.length} complété{completedCount > 1 ? "s" : ""}{allDone ? " 🏆" : ""}
+                          {completedCount}/{group.levels.length} {completedCount > 1 ? t("catalogue.completeds") : t("catalogue.completed")}{allDone ? " 🏆" : ""}
                         </div>
                       </div>
                     )}
