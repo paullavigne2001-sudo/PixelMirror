@@ -49,7 +49,7 @@ export const TRANSLATIONS = {
     "catalogue.completeds":"complétés",
 
     // ── Calendrier défis ─────────────────────
-    "calendar.title":     "📅 DÉFIS DU MOIS",
+    "calendar.title":     "📅 DEFIS DU MOIS",
     "calendar.cup":       "🏆 COUPE DU MOIS OBTENUE !",
     "calendar.legend_done":     "Complété",
     "calendar.legend_today":    "Aujourd'hui",

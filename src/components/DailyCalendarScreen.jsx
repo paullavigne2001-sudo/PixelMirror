@@ -1,8 +1,8 @@
-import { useTranslation, getDayNames } from "../i18n";
+import { useTranslation, getDayNames, getMonthName } from "../i18n";
 import { memo, useState } from "react";
-import { useTranslation, getDayNames } from "../i18n";
+import { useTranslation, getDayNames, getMonthName } from "../i18n";
 import {
-  monthName, daysInMonth, getLevelForDate, getEntryForDate,
+  daysInMonth, getLevelForDate, getEntryForDate,
   isDatePlayable, getMonthData, getAccessibleMonths,
   formatDate,
 } from "../daily";
@@ -70,7 +70,7 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
               }}
             >◀</button>
             <div style={{ fontSize: 8, color: "#fff", textAlign: "center" }}>
-              {monthName(ym)}
+              {getMonthName(ym)}
             </div>
             <button
               onClick={() => setCurrentMonthIdx(i => Math.max(i - 1, 0))}
