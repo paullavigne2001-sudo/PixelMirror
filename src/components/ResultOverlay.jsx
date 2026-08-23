@@ -1,5 +1,6 @@
 import { memo, useState, useEffect } from "react";
 import { sounds } from "../sounds";
+import { useTranslation } from "../i18n";
 
 function Particle({ x, emoji, delay, duration, size }) {
   return (
@@ -43,6 +44,7 @@ const ResultOverlay = memo(function ResultOverlay({
   trophyImg = null,
 }) {
   const [visible, setVisible] = useState(false);
+  const t = useTranslation();
   const [showTrophy, setShowTrophy] = useState(false);
   const [particles, setParticles] = useState([]);
 
@@ -72,7 +74,7 @@ const ResultOverlay = memo(function ResultOverlay({
     if (isNewMonthReward) setTimeout(() => setShowTrophy(true), 900);
   }, [visible]);
 
-  const msgs = ["Essaie encore ! 💪", "Bien joué ! 👍", "Bien joué ! 👍", "PARFAIT ! 🎉"];
+  const msgs = [t("result.retry_msg"), t("result.good"), t("result.good"), t("result.perfect")];
 
   // Couleurs selon étoiles
   const rayColor1  = stars === 3 ? "rgba(255,215,0,0.22)"  : stars === 2 ? "rgba(74,144,217,0.18)"   : "rgba(200,200,200,0.10)";
@@ -194,7 +196,7 @@ const ResultOverlay = memo(function ResultOverlay({
             )}
 
             <div style={{ fontSize: 8, color: "#bbb", marginBottom: 6, letterSpacing: 1 }}>
-              NIVEAU TERMINÉ !
+              {t("result.title")}
             </div>
 
             <div style={{
@@ -228,7 +230,7 @@ const ResultOverlay = memo(function ResultOverlay({
                 transition: "transform 0.55s cubic-bezier(0.34,1.8,0.64,1), opacity 0.4s",
               }}>
                 <div style={{ fontSize: 7, color: "#FFD700", marginBottom: 8, letterSpacing: 1 }}>
-                  🎉 COUPE DU MOIS DÉBLOQUÉE !
+                  {t("result.cup")}
                 </div>
                 {trophyImg
                   ? <img src={trophyImg} alt="coupe" style={{ width: 64, height: 64, objectFit: "contain" }} />
@@ -242,13 +244,13 @@ const ResultOverlay = memo(function ResultOverlay({
                 background: "#f0f0f0", border: "none", borderRadius: 12,
                 padding: "11px 16px", fontSize: 7,
                 fontFamily: "'Press Start 2P', monospace", cursor: "pointer", color: "#666",
-              }}>🔄 RETRY</button>
+              }}>{t("result.retry_btn")}</button>
               <button onClick={() => { sounds.next(); onNext(); }} style={{
                 background: "linear-gradient(135deg, #4A90D9, #357ABD)",
                 border: "none", borderRadius: 12, padding: "11px 20px", fontSize: 7,
                 fontFamily: "'Press Start 2P', monospace", cursor: "pointer", color: "#fff",
                 boxShadow: "0 4px 0 #2563a0",
-              }}>SUIVANT ▶</button>
+              }}>{t("result.next_btn")}</button>
             </div>
           </div>
         </div>
