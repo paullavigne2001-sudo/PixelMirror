@@ -1,6 +1,5 @@
 import { useTranslation, getDayNames, getMonthName } from "../i18n";
 import { memo, useState } from "react";
-import { useTranslation, getDayNames, getMonthName } from "../i18n";
 import {
   daysInMonth, getLevelForDate, getEntryForDate,
   isDatePlayable, getMonthData, getAccessibleMonths,
