@@ -1,4 +1,6 @@
+import { useTranslation } from "../i18n";
 import { memo, useState } from "react";
+import { useTranslation } from "../i18n";
 import {
   monthName, daysInMonth, getLevelForDate, getEntryForDate,
   isDatePlayable, getMonthData, getAccessibleMonths,
@@ -7,7 +9,8 @@ import {
 
 const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay }) {
   const accessibleMonths = getAccessibleMonths(3);
-  const [currentMonthIdx, setCurrentMonthIdx] = useState(0); // 0 = mois en cours
+  const [currentMonthIdx, setCurrentMonthIdx] = useState(0);
+  const t = useTranslation(); // 0 = mois en cours
   const ym = accessibleMonths[currentMonthIdx];
   const monthData = getMonthData(ym);
   const [y, m] = ym.split("-").map(Number);
@@ -43,7 +46,7 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           background: "rgba(0,0,0,0.3)",
         }}>
-          <div style={{ fontSize: 8, color: "#4A90D9", letterSpacing: 2 }}>📅 DÉFIS DU MOIS</div>
+          <div style={{ fontSize: 8, color: "#4A90D9", letterSpacing: 2 }}>{t("calendar.title")}</div>
           <button onClick={onClose} style={{
             background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#aaa",
           }}>✕</button>
@@ -193,10 +196,10 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
             display: "flex", gap: 12, flexWrap: "wrap",
             fontSize: 5, color: "#555", justifyContent: "center",
           }}>
-            <span><span style={{ color: "#88dd44" }}>■</span> Complété</span>
+            <span><span style={{ color: "#88dd44" }}>■</span>{t("calendar.legend_done")}</span>
             <span><span style={{ color: "#4A90D9" }}>■</span> Aujourd'hui</span>
-            <span><span style={{ color: "#666" }}>■</span> Disponible</span>
-            <span><span style={{ color: "#333" }}>🔒</span> Futur</span>
+            <span><span style={{ color: "#666" }}>■</span>{t("calendar.legend_available")}</span>
+            <span><span style={{ color: "#333" }}>🔒</span>{t("calendar.legend_future")}</span>
           </div>
 
         </div>
