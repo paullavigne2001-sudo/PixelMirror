@@ -1,8 +1,10 @@
 import { memo, useState } from "react";
 import { getAllMonthlyRewards, monthName, daysInMonth } from "../daily";
+import { useTranslation } from "../i18n";
 
 const RewardsScreen = memo(function RewardsScreen({ onClose, trophyImg }) {
   const rewards = getAllMonthlyRewards();
+  const t = useTranslation();
   const hasAny = rewards.some(r => r.rewardUnlocked);
 
   return (
@@ -27,7 +29,7 @@ const RewardsScreen = memo(function RewardsScreen({ onClose, trophyImg }) {
           borderBottom: "1px solid rgba(255,255,255,0.1)",
           background: "rgba(0,0,0,0.3)",
         }}>
-          <div style={{ fontSize: 9, color: "#FFD700", letterSpacing: 2 }}>🏆 MES RÉCOMPENSES</div>
+          <div style={{ fontSize: 9, color: "#FFD700", letterSpacing: 2 }}>{t("rewards.title")}</div>
           <button onClick={onClose} style={{
             background: "none", border: "none", fontSize: 20,
             cursor: "pointer", color: "#aaa",
@@ -114,7 +116,7 @@ const RewardsScreen = memo(function RewardsScreen({ onClose, trophyImg }) {
                             }} />
                           </div>
                           <div style={{ fontSize: 6, color: "#666" }}>
-                            {r.daysCompleted.length} / {r.total} jours
+                            {r.daysCompleted.length} / {r.total} {t("rewards.days")}
                           </div>
                         </>
                       )}
