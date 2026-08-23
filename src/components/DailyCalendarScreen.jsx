@@ -10,7 +10,7 @@ import {
 const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay }) {
   const accessibleMonths = getAccessibleMonths(3);
   const [currentMonthIdx, setCurrentMonthIdx] = useState(0);
-  const t = useTranslation(); // 0 = mois en cours
+  const t = useTranslation();
   const ym = accessibleMonths[currentMonthIdx];
   const monthData = getMonthData(ym);
   const [y, m] = ym.split("-").map(Number);
@@ -197,7 +197,7 @@ const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay 
             fontSize: 5, color: "#555", justifyContent: "center",
           }}>
             <span><span style={{ color: "#88dd44" }}>■</span>{t("calendar.legend_done")}</span>
-            <span><span style={{ color: "#4A90D9" }}>■</span> Aujourd'hui</span>
+            <span><span style={{ color: "#4A90D9" }}>■</span>{t("calendar.legend_today")}</span>
             <span><span style={{ color: "#666" }}>■</span>{t("calendar.legend_available")}</span>
             <span><span style={{ color: "#333" }}>🔒</span>{t("calendar.legend_future")}</span>
           </div>
