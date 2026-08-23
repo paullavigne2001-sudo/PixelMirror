@@ -1,16 +1,17 @@
-import { useTranslation } from "../i18n";
+import { useTranslation, getDayNames } from "../i18n";
 import { memo, useState } from "react";
-import { useTranslation } from "../i18n";
+import { useTranslation, getDayNames } from "../i18n";
 import {
   monthName, daysInMonth, getLevelForDate, getEntryForDate,
   isDatePlayable, getMonthData, getAccessibleMonths,
-  formatDate, DAY_NAMES,
+  formatDate,
 } from "../daily";
 
 const DailyCalendarScreen = memo(function DailyCalendarScreen({ onClose, onPlay }) {
   const accessibleMonths = getAccessibleMonths(3);
   const [currentMonthIdx, setCurrentMonthIdx] = useState(0);
   const t = useTranslation();
+  const DAY_NAMES = getDayNames();
   const ym = accessibleMonths[currentMonthIdx];
   const monthData = getMonthData(ym);
   const [y, m] = ym.split("-").map(Number);
