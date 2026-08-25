@@ -1,0 +1,13 @@
+{
+  "name": "PixelMirror",
+  "short_name": "PixelMirror",
+  "description": "Reproduis le pixel art !",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#4A90D9",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
