@@ -369,14 +369,7 @@ function GameScreen({ onHome, dailyDate = null }) {
         }}>🧹</div>
       </div>
 
-      {/* DONE */}
-      <button onClick={handleDone} style={{
-        background: "linear-gradient(135deg, #4A90D9, #357ABD)",
-        color: "#fff", border: "none", borderRadius: 14, padding: "14px 52px",
-        fontSize: 12, fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
-        boxShadow: "0 5px 0 #2563a0, 0 8px 20px rgba(74,144,217,0.35)",
-        letterSpacing: 1, marginBottom: 8,
-      }}>{t("game.done_btn")}</button>
+
 
       {showCompare && (
         <CompareAnimation target={level.grid} userGrid={userGrid} cols={COLS} rows={ROWS} onDone={handleCompareFinished} />
