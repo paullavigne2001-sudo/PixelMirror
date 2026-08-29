@@ -310,7 +310,7 @@ function GameScreen({ onHome, dailyDate = null }) {
       </div>
 
       {/* MODEL + DONE */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, padding: "0 16px", justifyContent: "center" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 15, marginBottom: 10, padding: "0 16px", justifyContent: "center" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>{t("game.model")}</div>
           <div style={modelGridStyle}>
