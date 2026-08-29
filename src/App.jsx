@@ -324,7 +324,7 @@ function GameScreen({ onHome, dailyDate = null }) {
           </div>
         </div>
         <button onClick={handleDone} style={{
-          background: "linear-gradient(270deg, #4A90D9, #357ABD)",
+          background: "linear-gradient(180deg, #4A90D9, #357ABD)",
           color: "#fff", border: "none", borderRadius: 14,
           padding: "12px 16px", fontSize: 9,
           fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
