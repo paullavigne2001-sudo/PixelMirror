@@ -309,18 +309,29 @@ function GameScreen({ onHome, dailyDate = null }) {
         <button onClick={() => { hapticButton(); setUserGrid(Array(totalCells).fill(null)); }} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#4A90D9" }}>🔄</button>
       </div>
 
-      {/* MODEL */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 10 }}>
-        <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>{t("game.model")}</div>
-        <div style={modelGridStyle}>
-          {level.grid.flat().map((c, i) => (
-            <div key={i} style={{
-              width: modelCell, height: modelCell,
-              background: c || "rgba(255,255,255,0.82)",
-              border: c ? "none" : "0.5px solid rgba(100,160,210,0.35)",
-            }} />
-          ))}
+      {/* MODEL + DONE */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, padding: "0 16px", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ fontSize: 7, color: "#4a6a8a", marginBottom: 5, letterSpacing: 1 }}>{t("game.model")}</div>
+          <div style={modelGridStyle}>
+            {level.grid.flat().map((c, i) => (
+              <div key={i} style={{
+                width: modelCell, height: modelCell,
+                background: c || "rgba(255,255,255,0.82)",
+                border: c ? "none" : "0.5px solid rgba(100,160,210,0.35)",
+              }} />
+            ))}
+          </div>
         </div>
+        <button onClick={handleDone} style={{
+          background: "linear-gradient(135deg, #4A90D9, #357ABD)",
+          color: "#fff", border: "none", borderRadius: 14,
+          padding: "12px 16px", fontSize: 9,
+          fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
+          boxShadow: "0 4px 0 #2563a0",
+          writingMode: "vertical-rl", textOrientation: "mixed",
+          letterSpacing: 2, minHeight: 80,
+        }}>{t("game.done_btn")}</button>
       </div>
 
       {/* DRAWING GRID */}
