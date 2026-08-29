@@ -25,7 +25,7 @@ export const TRANSLATIONS = {
     // ── Jeu ──────────────────────────────────
     "game.model":         "MODÈLE",
     "game.drawing":       "TON DESSIN",
-    "game.done_btn":      "DONE ✓",
+    "game.done_btn":      "OK",
     "game.daily_label":   "📅 DÉFI DU JOUR",
 
     // ── Résultat ─────────────────────────────
@@ -137,7 +137,7 @@ export const TRANSLATIONS = {
     // ── Game ─────────────────────────────────
     "game.model":         "MODEL",
     "game.drawing":       "YOUR DRAWING",
-    "game.done_btn":      "DONE ✓",
+    "game.done_btn":      "OK",
     "game.daily_label":   "📅 DAILY CHALLENGE",
 
     // ── Result ───────────────────────────────
