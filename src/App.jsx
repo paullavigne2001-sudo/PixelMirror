@@ -330,7 +330,7 @@ function GameScreen({ onHome, dailyDate = null }) {
           fontFamily: "'Press Start 2P', monospace", cursor: "pointer",
           boxShadow: "0 4px 0 #2563a0",
           writingMode: "vertical-rl", transform: "rotate(270deg)",
-          letterSpacing: 2, minHeight: 80,
+          letterSpacing: 2, minHeight: 80,marginLeft: 10,
         }}>{t("game.done_btn")}</button>
       </div>
 
