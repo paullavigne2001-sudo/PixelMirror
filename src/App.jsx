@@ -430,19 +430,19 @@ export default function App() {
           onCatalogue={() => setShowCatalogueHome(true)}
         />
       )}
-      {screen === "game" && (
+      '{screen === "game" && (
         <GameScreen onHome={() => setScreen("home")} dailyDate={null} />
       )}
-      {screen === "daily" && (
+      '{screen === "daily" && (
         <GameScreen onHome={() => setScreen("calendar")} dailyDate={dailyDate} />
       )}
-      {screen === "calendar" && (
+      '{screen === "calendar" && (
         <DailyCalendarScreen
           onClose={() => setScreen("home")}
           onPlay={(dateStr) => { setDailyDate(dateStr); setScreen("daily"); }}
         />
       )}
-      {screen === "rewards" && (
+      '{screen === "rewards" && (
         <RewardsScreen onClose={() => setScreen("home")} trophyImg="/rewards/trophy.png" />
       )}
 
