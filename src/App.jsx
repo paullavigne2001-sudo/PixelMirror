@@ -420,7 +420,7 @@ export default function App() {
       <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
       {/* BOUTON PARAMÈTRES FLOTTANT — toujours visible */}
-      {screen === "home" && <FloatingSettingsButton onOpen={() => { hapticButton(); setShowSettings(true); }} />}
+      {screen === "home" && !showCatalogueHome && <FloatingSettingsButton onOpen={() => { hapticButton(); setShowSettings(true); }} />}
 
       {screen === "home" && (
         <HomeScreen
