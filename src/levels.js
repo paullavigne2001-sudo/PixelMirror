@@ -202,6 +202,32 @@ export const LEVELS = [
       return [[N,N,N,N,N,N,N,N,S,N],[N,N,N,N,N,N,N,S,D,N],[N,N,N,N,N,N,S,D,N,N],[N,N,N,N,N,S,D,N,N,N],[N,G,G,N,S,D,N,N,N,N],[G,G,G,G,S,N,N,N,N,N],[N,G,G,B,N,N,N,N,N,N],[N,N,B,B,B,N,N,N,N,N],[N,B,B,N,B,B,N,N,N,N],[N,N,N,N,N,N,N,N,N,N]];
     })(),
   },
+    {
+    id: /* ⚠️ CHANGER */ 99, name: "Mon niveau", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#557b05", "#ef2525", "#88aa00", "#000000", "#f66151"],
+    grid: (() => {
+      const N = null, A = "#88aa00", B = "#557b05", C = "#ef2525", D = "#f66151", E = "#000000";
+      return [
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,A,B,N,N,N],
+        [N,N,N,N,N,N,N,N,N,C,D,A,B,N,N],
+        [N,N,N,N,N,N,N,N,C,C,D,D,A,B,N],
+        [N,N,N,N,N,N,N,C,C,E,C,D,A,B,N],
+        [N,N,N,N,N,N,C,C,C,C,C,D,A,B,N],
+        [N,N,N,N,N,C,C,C,E,C,C,D,A,B,N],
+        [N,N,N,N,C,C,C,C,C,C,C,D,A,B,N],
+        [N,N,N,C,C,C,E,C,C,C,D,D,A,B,N],
+        [N,N,C,C,E,C,C,C,C,C,D,A,B,N,N],
+        [N,A,D,D,C,C,C,C,D,D,A,B,B,N,N],
+        [N,B,A,D,D,D,D,D,D,A,B,B,N,N,N],
+        [N,N,B,A,A,A,A,A,A,B,B,N,N,N,N],
+        [N,N,N,N,B,B,B,B,B,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N]
+      ];
+    })(),
+  },
 
   // ─────────────────────────────────────────────
   // NIVEAUX ÉVÉNEMENTS
