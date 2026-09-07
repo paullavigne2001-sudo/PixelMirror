@@ -203,7 +203,7 @@ export const LEVELS = [
     })(),
   },
     {
-    id: /* ⚠️ CHANGER */ 99, name: "Mon niveau", emoji: "🎨",
+    id: 20, name: "Pastèque", emoji: "🎨",
     type: "standard",
     cols: 15, rows: 15,
     palette: ["#557b05", "#ef2525", "#88aa00", "#000000", "#f66151"],
