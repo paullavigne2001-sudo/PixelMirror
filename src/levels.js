@@ -254,6 +254,356 @@ export const LEVELS = [
       ];
     })(),
   },
+    {
+    id: 23, name: "Cygne", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#a5bee8", "#eeaedd", "#ffffff", "#071e6b", "#f6d32d", "#fba008", "#62a0ea"],
+    grid: (() => {
+      const N = null, A = "#eeaedd", B = "#ffffff", C = "#a5bee8", D = "#071e6b", E = "#f6d32d", F = "#fba008", G = "#62a0ea";
+      return [
+        [A,A,A,B,C,A,A,A,A,A],
+        [A,A,B,D,B,C,A,A,A,A],
+        [A,E,F,B,B,B,C,A,A,A],
+        [A,A,A,A,B,B,C,A,A,B],
+        [A,A,A,B,B,C,A,A,B,C],
+        [A,B,B,C,G,A,G,B,C,B],
+        [B,B,C,G,A,G,B,C,G,G],
+        [C,B,G,G,G,B,C,G,B,B],
+        [C,B,B,B,B,C,C,B,G,G],
+        [G,C,C,C,B,B,C,G,G,C]
+      ];
+    })(),
+  },
+    {
+    id: 25, name: "Chateau", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#10e4f9", "#4c2933", "#add3e2", "#377aa8", "#e80d2c", "#ecb14c"],
+    grid: (() => {
+      const N = null, A = "#10e4f9", B = "#e80d2c", C = "#27d4e4", D = "#ecb14c", E = "#add3e2", F = "#377aa8", G = "#4c2933";
+      return [
+        [A,A,A,A,B,A,A,A,A,A],
+        [C,A,A,B,B,B,A,A,A,A],
+        [C,C,D,D,D,D,D,A,A,A],
+        [C,C,C,E,E,E,A,A,A,A],
+        [A,E,C,E,F,E,A,E,A,E],
+        [E,E,C,E,E,E,A,E,E,E],
+        [F,E,E,E,G,E,E,E,F,E],
+        [F,E,E,G,G,G,E,E,F,E],
+        [E,E,E,G,G,G,E,E,E,E],
+        [E,E,E,G,G,G,E,E,E,E]
+      ];
+    })(),
+  },
+    {
+    id: 26, name: "Sumo", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#edc2a5", "#7cebca", "#cd8264", "#1c1e30", "#743f3a"],
+    grid: (() => {
+      const N = null, A = "#7cebca", B = "#1c1e30", C = "#edc2a5", D = "#cd8264", E = "#743f3a", F = "#cc8264";
+      return [
+        [A,A,A,A,A,B,B,B,B,B,A,A,A,A,A],
+        [A,A,A,A,A,B,C,C,D,B,A,A,A,A,A],
+        [A,A,A,C,D,C,E,C,E,D,D,D,A,A,A],
+        [A,A,C,C,D,C,C,C,C,D,D,D,D,A,A],
+        [A,A,C,C,C,D,C,C,D,D,D,D,D,A,A],
+        [A,C,C,C,C,C,C,D,D,C,C,F,D,D,A],
+        [A,C,C,C,D,C,C,D,C,C,C,C,D,D,A],
+        [C,C,C,D,C,C,D,D,D,D,D,C,C,D,D],
+        [C,C,C,D,D,F,F,C,C,C,D,C,C,D,D],
+        [D,F,C,C,D,F,C,C,C,D,D,C,C,D,D],
+        [C,D,C,C,C,D,A,A,A,D,C,C,D,D,D],
+        [C,C,D,C,C,A,A,A,A,A,C,C,D,D,A],
+        [A,C,D,A,A,A,A,A,A,A,A,A,C,D,A],
+        [C,D,D,A,A,A,A,A,A,A,A,A,C,C,D],
+        [C,D,D,A,A,A,A,A,A,A,A,A,C,C,D]
+      ];
+    })(),
+  },
+    {
+    id: 27, name: "Caravelle", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#894003", "#82171f", "#f41515", "#ffcc2b", "#fdefc2", "#001da8", "#0378c9"],
+    grid: (() => {
+      const N = null, A = "#f41515", B = "#fdefc2", C = "#ffcc2b", D = "#894003", E = "#82171f", F = "#0378c9", G = "#001da8";
+      return [
+        [A,A,B,B,A,A,B,B,B,B],
+        [B,A,A,B,B,A,A,B,C,C],
+        [C,A,A,C,C,A,A,C,C,C],
+        [A,A,A,C,A,A,A,C,C,C],
+        [C,C,D,C,C,D,C,C,D,D],
+        [D,C,D,C,C,D,C,C,D,D],
+        [D,D,D,D,D,D,D,D,D,C],
+        [D,D,E,D,E,D,E,D,D,F],
+        [F,D,D,D,D,D,D,D,F,G],
+        [G,G,G,F,F,F,F,G,G,G]
+      ];
+    })(),
+  },
+    {
+    id: 28, name: "Frites", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#faab0d", "#fde51f", "#99c1f1", "#ed333b", "#c01c28"],
+    grid: (() => {
+      const N = null, A = "#99c1f1", B = "#fde51f", C = "#faab0d", D = "#ffbd00", E = "#c01c28", F = "#ed333b";
+      return [
+        [A,A,A,A,B,C,A,A,B,A],
+        [A,D,B,A,B,C,A,C,B,A],
+        [B,D,B,A,B,C,A,C,B,C],
+        [B,C,B,B,B,C,C,B,C,C],
+        [B,B,C,B,C,B,C,B,C,B],
+        [C,B,C,B,C,B,C,B,C,B],
+        [E,F,C,B,C,B,C,B,F,E],
+        [E,F,F,B,C,B,C,F,F,E],
+        [E,E,F,F,F,F,F,F,E,E],
+        [E,E,E,F,B,C,F,E,E,E]
+      ];
+    })(),
+  },
+    {
+    id: 29, name: "Tournesol", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#00c5fb", "#ffad00", "#316d08", "#fa8100", "#ffd500", "#85462a"],
+    grid: (() => {
+      const N = null, A = "#00c5fb", B = "#fa8100", C = "#ffd500", D = "#85462a", E = "#ffad00", F = "#316d08";
+      return [
+        [A,A,A,A,B,B,A,A,A,A],
+        [A,B,C,C,B,B,C,C,B,A],
+        [A,B,B,D,D,D,D,B,B,A],
+        [C,C,D,D,D,D,D,D,C,C],
+        [E,E,D,D,D,D,D,D,E,E],
+        [A,B,B,D,D,D,D,B,B,A],
+        [B,B,C,C,B,B,C,C,B,B],
+        [A,A,C,A,B,B,A,C,A,A],
+        [A,F,F,A,F,F,A,F,F,A],
+        [A,A,F,F,F,F,F,F,A,A]
+      ];
+    })(),
+  },
+    {
+    id: 30, name: "Chat noir", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#5b7f46", "#b5d9f7", "#202121", "#36384a", "#33d17a", "#ffffff", "#fc9bc4", "#865e3c"],
+    grid: (() => {
+      const N = null, A = "#b5d9f7", B = "#fc9bc4", C = "#a4cbea", D = "#ffffff", E = "#36384a", F = "#202121", G = "#33d17a", H = "#5b7f46", I = "#865e3c";
+      return [
+        [A,A,A,A,A,B,C,C,B,A,A,A,A,A,A],
+        [D,D,A,A,A,E,E,F,B,A,A,A,A,D,A],
+        [A,A,A,A,E,G,F,G,E,A,A,D,D,D,D],
+        [A,A,A,A,E,E,B,E,E,F,A,A,A,A,A],
+        [A,A,A,A,A,E,E,E,F,F,F,A,A,A,A],
+        [A,H,H,A,A,A,F,F,F,F,F,F,A,A,A],
+        [H,H,H,H,H,A,E,E,F,F,F,F,F,A,A],
+        [H,H,H,H,H,H,E,E,E,F,F,F,E,F,H],
+        [H,H,H,H,H,H,A,E,E,F,F,E,F,F,H],
+        [H,H,H,H,H,H,H,E,E,E,F,E,F,F,H],
+        [H,H,H,H,H,H,H,F,F,E,F,E,F,F,H],
+        [H,H,H,H,H,H,E,F,E,E,F,E,F,F,H],
+        [I,I,I,I,I,I,I,I,I,I,I,I,F,F,I],
+        [I,I,I,I,I,I,I,I,I,E,E,F,F,F,I],
+        [I,I,I,I,E,E,E,E,E,E,E,F,F,F,I]
+      ];
+    })(),
+  },
+    {
+    id: 31, name: "Grenouille", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#5b7f46", "#b5d9f7", "#202121", "#36384a", "#33d17a", "#ffffff", "#fc9bc4", "#865e3c"],
+    grid: (() => {
+      const N = null, A = "#b5d9f7", B = "#fc9bc4", C = "#a4cbea", D = "#ffffff", E = "#36384a", F = "#202121", G = "#33d17a", H = "#5b7f46", I = "#865e3c";
+      return [
+        [A,A,A,A,A,B,C,C,B,A,A,A,A,A,A],
+        [D,D,A,A,A,E,E,F,B,A,A,A,A,D,A],
+        [A,A,A,A,E,G,F,G,E,A,A,D,D,D,D],
+        [A,A,A,A,E,E,B,E,E,F,A,A,A,A,A],
+        [A,A,A,A,A,E,E,E,F,F,F,A,A,A,A],
+        [A,H,H,A,A,A,F,F,F,F,F,F,A,A,A],
+        [H,H,H,H,H,A,E,E,F,F,F,F,F,A,A],
+        [H,H,H,H,H,H,E,E,E,F,F,F,E,F,H],
+        [H,H,H,H,H,H,A,E,E,F,F,E,F,F,H],
+        [H,H,H,H,H,H,H,E,E,E,F,E,F,F,H],
+        [H,H,H,H,H,H,H,F,F,E,F,E,F,F,H],
+        [H,H,H,H,H,H,E,F,E,E,F,E,F,F,H],
+        [I,I,I,I,I,I,I,I,I,I,I,I,F,F,I],
+        [I,I,I,I,I,I,I,I,I,E,E,F,F,F,I],
+        [I,I,I,I,E,E,E,E,E,E,E,F,F,F,I]
+      ];
+    })(),
+  },
+      {
+    id: 32, name: "Nichoir", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#5b7f46", "#b5d9f7", "#202121", "#36384a", "#33d17a", "#ffffff", "#fc9bc4", "#865e3c"],
+    grid: (() => {
+      const N = null, A = "#b5d9f7", B = "#fc9bc4", C = "#a4cbea", D = "#ffffff", E = "#36384a", F = "#202121", G = "#33d17a", H = "#5b7f46", I = "#865e3c";
+      return [
+        [A,A,A,A,A,B,C,C,B,A,A,A,A,A,A],
+        [D,D,A,A,A,E,E,F,B,A,A,A,A,D,A],
+        [A,A,A,A,E,G,F,G,E,A,A,D,D,D,D],
+        [A,A,A,A,E,E,B,E,E,F,A,A,A,A,A],
+        [A,A,A,A,A,E,E,E,F,F,F,A,A,A,A],
+        [A,H,H,A,A,A,F,F,F,F,F,F,A,A,A],
+        [H,H,H,H,H,A,E,E,F,F,F,F,F,A,A],
+        [H,H,H,H,H,H,E,E,E,F,F,F,E,F,H],
+        [H,H,H,H,H,H,A,E,E,F,F,E,F,F,H],
+        [H,H,H,H,H,H,H,E,E,E,F,E,F,F,H],
+        [H,H,H,H,H,H,H,F,F,E,F,E,F,F,H],
+        [H,H,H,H,H,H,E,F,E,E,F,E,F,F,H],
+        [I,I,I,I,I,I,I,I,I,I,I,I,F,F,I],
+        [I,I,I,I,I,I,I,I,I,E,E,F,F,F,I],
+        [I,I,I,I,E,E,E,E,E,E,E,F,F,F,I]
+      ];
+    })(),
+  },
+    {
+    id: 33 name: "Perroquet", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#315d2b", "#54c31b", "#65a7dd", "#ec6024", "#dbba34", "#071e6b", "#1c71d8", "#f9f06b"],
+    grid: (() => {
+      const N = null, A = "#315d2b", B = "#54c31b", C = "#dbba34", D = "#f9f06b", E = "#071e6b", F = "#65a7dd", G = "#ec6024", H = "#1c71d8";
+      return [
+        [N,N,A,B,B,B,C,C,N,N],
+        [N,A,B,B,B,D,D,C,C,N],
+        [N,A,B,B,D,D,E,C,E,F],
+        [A,A,A,D,G,G,D,D,E,F],
+        [A,A,A,D,G,G,D,D,N,E],
+        [A,H,H,D,D,D,D,N,N,N],
+        [H,H,F,F,H,H,G,G,N,N],
+        [H,H,H,F,F,H,H,G,G,N],
+        [H,H,H,F,F,F,H,G,G,N],
+        [H,H,H,F,F,F,H,G,G,N]
+      ];
+    })(),
+  },
+    {
+    id: 34, name: "Poussin", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#315d2b", "#54c31b", "#65a7dd", "#ec6024", "#dbba34", "#071e6b", "#1c71d8", "#f9f06b"],
+    grid: (() => {
+      const N = null, A = "#315d2b", B = "#54c31b", C = "#dbba34", D = "#f9f06b", E = "#071e6b", F = "#65a7dd", G = "#ec6024", H = "#1c71d8";
+      return [
+        [N,N,A,B,B,B,C,C,N,N],
+        [N,A,B,B,B,D,D,C,C,N],
+        [N,A,B,B,D,D,E,C,E,F],
+        [A,A,A,D,G,G,D,D,E,F],
+        [A,A,A,D,G,G,D,D,N,E],
+        [A,H,H,D,D,D,D,N,N,N],
+        [H,H,F,F,H,H,G,G,N,N],
+        [H,H,H,F,F,H,H,G,G,N],
+        [H,H,H,F,F,F,H,G,G,N],
+        [H,H,H,F,F,F,H,G,G,N]
+      ];
+    })(),
+  },
+    {
+    id: 35, name: "Oiseaux", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#82b9c0", "#6b391f", "#626a26", "#b96c44", "#fbfeff", "#0c0537", "#f6d32d"],
+    grid: (() => {
+      const N = null, A = "#82b9c0", B = "#f6d32d", C = "#fbfeff", D = "#6b391f", E = "#b96c44", F = "#0c0537", G = "#626a26", H = "#e5d66b";
+      return [
+        [A,A,A,A,A,A,A,A,A,B,B,A,A,C,C],
+        [A,A,A,D,D,D,A,A,A,B,B,A,C,C,C],
+        [A,A,D,D,D,E,E,A,A,A,A,A,A,A,A],
+        [A,A,C,C,D,C,C,A,A,A,A,A,A,A,A],
+        [A,A,C,F,D,C,F,A,A,A,D,D,D,A,A],
+        [A,D,D,B,B,B,D,D,A,F,C,D,F,C,A],
+        [A,D,D,D,B,D,D,D,A,C,C,D,C,C,A],
+        [G,D,D,H,H,H,D,D,A,D,D,B,D,D,A],
+        [G,D,E,H,H,H,D,E,G,D,D,D,D,D,D],
+        [G,G,E,E,E,E,E,D,D,D,B,D,B,D,D],
+        [D,D,D,B,D,B,D,D,A,D,E,E,E,D,A],
+        [G,G,D,E,E,E,E,D,A,A,E,E,E,G,G],
+        [G,G,G,G,E,E,A,A,A,A,A,E,G,G,G],
+        [G,G,G,G,G,G,A,A,A,G,G,G,G,G,G],
+        [G,G,G,G,G,G,G,G,G,G,G,G,G,G,G]
+      ];
+    })(),
+  },
+    {
+    id: 36, name: "Chaudron", emoji: "🎨",
+    type: "standard",
+    cols: 10, rows: 10,
+    palette: ["#1669b6", "#00274b", "#2e594e", "#fcd736", "#fba008"],
+    grid: (() => {
+      const N = null, A = "#fcd736", B = "#fba008", C = "#1669b6", D = "#2e594e", E = "#00274b", F = "#fabc1e";
+      return [
+        [A,A,A,A,B,B,B,A,B,B],
+        [A,A,A,B,B,A,B,B,B,A],
+        [A,A,C,C,C,C,C,C,A,A],
+        [A,C,D,D,D,D,D,D,C,A],
+        [A,C,C,C,C,C,C,C,C,A],
+        [A,A,E,E,E,E,E,E,A,A],
+        [E,C,C,E,C,E,C,E,E,E],
+        [A,C,E,C,E,C,E,C,E,A],
+        [A,E,C,E,C,E,C,E,E,F],
+        [B,B,E,E,E,E,E,E,B,B]
+      ];
+    })(),
+  },
+    {
+    id: 37, name: "Kangourou", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#fba00b", "#4f331c", "#4a8829", "#f3cb5f", "#b7dcfa", "#7aaf52"],
+    grid: (() => {
+      const N = null, A = "#b7dcfa", B = "#fba00b", C = "#4a8829", D = "#7aaf52", E = "#4f331c", F = "#f3cb5f";
+      return [
+        [A,B,A,A,A,B,A,A,A,A,A,C,C,C,C],
+        [A,B,B,A,B,B,A,A,C,D,A,C,C,E,D],
+        [A,A,E,B,E,A,A,C,C,D,D,C,C,E,E],
+        [A,A,B,B,B,A,A,C,E,E,D,D,C,C,E],
+        [A,A,F,E,F,A,A,C,C,E,E,E,D,C,E],
+        [A,A,A,F,B,A,A,A,C,C,C,E,E,E,E],
+        [A,A,A,B,B,B,A,A,A,A,A,A,A,E,E],
+        [B,B,B,F,B,B,F,F,F,F,F,F,A,A,E],
+        [B,A,A,F,F,B,B,B,B,B,B,B,F,A,E],
+        [A,A,B,B,B,F,B,B,B,F,F,B,B,A,E],
+        [A,A,B,A,A,F,F,B,F,F,F,F,B,A,E],
+        [A,A,A,A,A,A,B,B,F,F,F,B,B,A,E],
+        [D,D,D,D,D,D,D,E,F,D,D,B,B,B,E],
+        [D,D,D,D,D,E,F,F,F,D,D,D,B,B,B],
+        [N,N,N,N,N,E,N,E,E,N,N,N,N,N,N]
+      ];
+    })(),
+  },
+    {
+    id: 38, name: "Chat en boite", emoji: "🎨",
+    type: "standard",
+    cols: 15, rows: 15,
+    palette: ["#2d2e3a", "#a1341d", "#0f5e9e", "#ed9f9f", "#ffffff", "#fba008"],
+    grid: (() => {
+      const N = null, A = "#ed9f9f", B = "#2d2e3a", C = "#a1341d", D = "#0f5e9e", E = "#ffffff", F = "#eaa087", G = "#fba008";
+      return [
+        [A,A,A,B,B,A,A,A,A,B,B,A,A,A,A],
+        [A,A,A,C,B,B,A,A,B,B,C,A,A,A,A],
+        [A,A,A,C,C,B,D,D,B,C,C,A,A,A,A],
+        [A,A,A,D,D,D,D,D,B,B,B,A,A,A,A],
+        [A,A,A,D,B,E,D,B,E,B,B,A,A,A,A],
+        [A,A,D,D,D,D,C,D,D,B,B,B,A,A,A],
+        [A,A,A,D,D,D,D,D,B,B,B,F,A,A,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
+        [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A]
+      ];
+    })(),
+  },
 
   // ─────────────────────────────────────────────
   // NIVEAUX ÉVÉNEMENTS
