@@ -464,7 +464,7 @@ export const LEVELS = [
     })(),
   },
     {
-    id: 33 name: "Perroquet", emoji: "🎨",
+    id: 33, name: "Perroquet", emoji: "🎨",
     type: "standard",
     cols: 10, rows: 10,
     palette: ["#315d2b", "#54c31b", "#65a7dd", "#ec6024", "#dbba34", "#071e6b", "#1c71d8", "#f9f06b"],
