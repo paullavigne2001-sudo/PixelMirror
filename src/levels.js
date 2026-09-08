@@ -39,13 +39,25 @@ export const LEVELS = [
     })(),
   },
   {
-    id: 3, name: "Étoile", emoji: "⭐",
+    id: 3, name: "Etoile", emoji: "🎨",
     type: "standard",
-    cols: 10, rows: 10,
-    palette: ["#FFD700", "#FFA500"],
+    cols: 11, rows: 11,
+    palette: ["#000000", "#f5c211"],
     grid: (() => {
-      const N = null, Y = "#FFD700", O = "#FFA500";
-      return [[N,N,N,N,Y,Y,N,N,N,N],[N,N,N,Y,Y,Y,Y,N,N,N],[Y,Y,Y,Y,Y,Y,Y,Y,Y,Y],[N,Y,Y,Y,Y,Y,Y,Y,Y,N],[N,N,O,Y,Y,Y,Y,O,N,N],[N,N,Y,Y,Y,Y,Y,Y,N,N],[N,Y,Y,N,Y,Y,N,Y,Y,N],[Y,Y,N,N,Y,Y,N,N,Y,Y],[Y,N,N,N,N,N,N,N,N,Y],[N,N,N,N,N,N,N,N,N,N]];
+      const N = null, A = "#000000", B = "#f5c211";
+      return [
+        [N,N,N,N,N,A,N,N,N,N,N],
+        [N,N,N,N,A,B,A,N,N,N,N],
+        [N,N,N,A,B,B,B,A,N,N,N],
+        [A,A,A,A,B,B,B,A,A,A,A],
+        [A,B,B,B,A,B,A,B,B,B,A],
+        [N,A,B,B,A,B,A,B,B,A,N],
+        [N,N,A,B,B,B,B,B,A,N,N],
+        [N,N,A,B,B,B,B,B,A,N,N],
+        [N,A,B,B,A,A,A,B,B,A,N],
+        [N,A,B,A,N,N,N,A,B,A,N],
+        [N,N,A,N,N,N,N,N,A,N,N]
+      ];
     })(),
   },
   {
@@ -119,7 +131,7 @@ export const LEVELS = [
     })(),
   },
   {
-    id: /* ⚠️ CHANGER */ 99, name: "Fleur", emoji: "🎨",
+    id: 11, name: "Fleur", emoji: "🎨",
     type: "standard",
     cols: 20, rows: 20,
     palette: ["#000000", "#f5c211", "#f66151", "#a51d2d", "#205502", "#44b007"],
@@ -210,7 +222,7 @@ export const LEVELS = [
     })(),
   },
   {
-    id: /* ⚠️ CHANGER */ 99, name: "Poisson", emoji: "🎨",
+    id: 18, name: "Poisson", emoji: "🎨",
     type: "standard",
     cols: 20, rows: 20,
     palette: ["#000000", "#3584e4"],
@@ -659,6 +671,43 @@ export const LEVELS = [
         [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
         [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A],
         [A,G,G,G,G,G,G,G,G,G,G,G,G,G,A]
+      ];
+    })(),
+  },
+    {
+    id: 39, name: "Poisson Clown", emoji: "🎨",
+    type: "standard",
+    cols: 26, rows: 26,
+    palette: ["#ffffff", "#000000", "#ff7800"],
+    grid: (() => {
+      const N = null, A = "#000000", B = "#ff7800", C = "#ffffff";
+      return [
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,A,A,A,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,A,B,B,B,A,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,A,B,B,B,B,B,A,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,A,B,B,B,B,B,A,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,A,A,A,A,A,A,A,A,A,N,A,A,A,N,N,N,N,N,N],
+        [N,N,N,N,N,N,A,C,C,A,B,B,B,A,C,C,A,B,B,B,A,N,N,N,N,N],
+        [N,N,N,N,A,A,C,C,C,A,B,B,B,A,C,C,C,A,B,B,A,N,N,N,N,N],
+        [N,N,N,A,B,B,A,C,C,C,A,B,A,C,C,C,A,B,A,B,A,N,N,N,N,N],
+        [N,N,A,B,A,A,B,A,C,C,A,B,A,C,C,C,A,B,B,A,A,N,A,A,N,N],
+        [N,A,B,B,C,A,B,A,C,C,A,B,A,C,C,C,A,B,B,A,A,A,B,B,A,N],
+        [N,A,B,B,A,A,B,A,C,C,A,B,A,C,C,A,B,B,A,C,C,A,B,B,A,N],
+        [N,A,B,B,B,B,B,A,C,C,A,B,A,C,C,A,B,B,A,C,C,A,B,B,A,N],
+        [N,A,B,B,B,B,A,C,C,A,B,B,A,C,C,A,B,B,A,C,A,A,B,B,A,N],
+        [N,A,B,B,B,A,C,C,C,A,B,B,A,C,C,A,B,B,A,A,N,N,A,A,N,N],
+        [N,N,A,B,B,A,C,C,A,B,B,B,A,C,C,A,B,A,A,N,N,N,N,N,N,N],
+        [N,N,N,A,A,C,C,C,A,A,B,A,C,C,C,A,A,B,B,A,N,N,N,N,N,N],
+        [N,N,N,N,N,A,A,A,B,B,A,A,A,A,A,A,B,B,B,A,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,A,B,B,B,A,N,N,N,N,A,A,A,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,A,B,B,B,A,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,A,A,A,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N]
       ];
     })(),
   },
