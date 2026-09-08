@@ -71,13 +71,30 @@ export const LEVELS = [
     })(),
   },
   {
-    id: 5, name: "Champignon", emoji: "🍄",
+    id: 5, name: "Champignon", emoji: "🎨",
     type: "standard",
-    cols: 10, rows: 10,
-    palette: ["#D0021B", "#FFFFFF", "#8B4513", "#F5DEB3"],
+    cols: 16, rows: 16,
+    palette: ["#000000", "#ffffff", "#e01b24", "#cdab8f", "#b5835a", "#cf0707"],
     grid: (() => {
-      const N = null, R = "#D0021B", W = "#FFFFFF", B = "#8B4513", T = "#F5DEB3";
-      return [[N,N,N,R,R,R,R,N,N,N],[N,N,R,R,R,R,R,R,N,N],[N,R,R,W,W,R,W,W,R,N],[R,R,R,W,W,R,W,W,R,R],[R,R,R,R,R,R,R,R,R,R],[R,R,R,R,R,R,R,R,R,R],[N,R,R,R,R,R,R,R,R,N],[N,N,T,T,T,T,T,T,N,N],[N,N,N,T,T,T,T,N,N,N],[N,N,N,B,B,B,B,N,N,N]];
+      const N = null, A = "#000000", B = "#cf0707", C = "#e01b24", D = "#ffffff", E = "#b5835a", F = "#cdab8f";
+      return [
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,A,A,A,A,N,N,N,N,N,N],
+        [N,N,N,N,N,A,B,B,C,D,A,N,N,N,N,N],
+        [N,N,N,N,A,B,B,C,C,C,C,A,N,N,N,N],
+        [N,N,N,A,B,D,C,C,D,C,C,C,A,N,N,N],
+        [N,N,A,B,B,B,C,C,C,C,D,C,C,A,N,N],
+        [N,N,A,B,D,B,B,B,C,C,C,C,C,A,N,N],
+        [N,N,N,A,A,A,A,A,A,A,A,A,A,N,N,N],
+        [N,N,N,N,N,A,E,E,E,E,A,N,N,N,N,N],
+        [N,N,N,N,A,E,E,F,F,F,F,A,N,N,N,N],
+        [N,N,N,N,A,E,E,F,F,F,F,A,N,N,N,N],
+        [N,N,N,N,A,E,E,E,F,F,F,A,N,N,N,N],
+        [N,N,N,N,N,A,A,A,A,A,A,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N]
+      ];
     })(),
   },
   {
