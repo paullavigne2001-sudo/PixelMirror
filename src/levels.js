@@ -108,13 +108,30 @@ export const LEVELS = [
     })(),
   },
   {
-    id: 7, name: "Cactus", emoji: "🌵",
+    id: 7, name: "Cactus", emoji: "🎨",
     type: "standard",
-    cols: 10, rows: 10,
-    palette: ["#417505", "#228B22", "#8B4513"],
+    cols: 16, rows: 16,
+    palette: ["#000000", "#ffffff", "#e01b24", "#cdab8f", "#b5835a", "#cf0707"],
     grid: (() => {
-      const N = null, G = "#417505", D = "#228B22", B = "#8B4513";
-      return [[N,N,N,N,G,G,N,N,N,N],[N,N,G,N,G,G,N,G,N,N],[N,N,G,N,G,G,N,G,N,N],[N,N,G,G,G,G,G,G,N,N],[N,N,D,N,G,G,N,D,N,N],[N,N,N,N,G,G,N,N,N,N],[N,N,N,N,G,G,N,N,N,N],[N,N,N,N,G,G,N,N,N,N],[N,N,B,B,G,G,B,B,N,N],[N,N,B,B,B,B,B,B,N,N]];
+      const N = null, A = "#000000", B = "#cf0707", C = "#e01b24", D = "#ffffff", E = "#b5835a", F = "#cdab8f";
+      return [
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,A,A,A,A,N,N,N,N,N,N],
+        [N,N,N,N,N,A,B,B,C,D,A,N,N,N,N,N],
+        [N,N,N,N,A,B,B,C,C,C,C,A,N,N,N,N],
+        [N,N,N,A,B,D,C,C,D,C,C,C,A,N,N,N],
+        [N,N,A,B,B,B,C,C,C,C,D,C,C,A,N,N],
+        [N,N,A,B,D,B,B,B,C,C,C,C,C,A,N,N],
+        [N,N,N,A,A,A,A,A,A,A,A,A,A,N,N,N],
+        [N,N,N,N,N,A,E,E,E,E,A,N,N,N,N,N],
+        [N,N,N,N,A,E,E,F,F,F,F,A,N,N,N,N],
+        [N,N,N,N,A,E,E,F,F,F,F,A,N,N,N,N],
+        [N,N,N,N,A,E,E,E,F,F,F,A,N,N,N,N],
+        [N,N,N,N,N,A,A,A,A,A,A,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N],
+        [N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N]
+      ];
     })(),
   },
   {
