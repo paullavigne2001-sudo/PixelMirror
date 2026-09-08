@@ -135,7 +135,7 @@ export const LEVELS = [
     })(),
   },
   {
-    id: 8, name: "Champignon", emoji: "🎨",
+    id: 8, name: "Couronne", emoji: "🎨",
     type: "standard",
     cols: 15, rows: 10,
     palette: ["#f5c211", "#3584e4", "#a60b0b", "#33d17a"],
